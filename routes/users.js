@@ -21,19 +21,18 @@ router.post("/login", (req, res) => {
   getUser(userName)
     .then(user => {
       console.log("Promise from database:", user);
-      if (user) {
+      if (userName === "admin") {
         res.json({
           success: true,
-          message: "Login successful as admin!",
+          message: "Login successful, admin!",
           data: user
         });
-      if (guest) {
+      } else if (userName === "guest") {
         res.json({
           success: true,
-          message: "Login successful as guest",
+          message: "Login successful, guest!",
           data: user
-        })
-      }
+        });
       } else {
         res.json({
           success: false,
