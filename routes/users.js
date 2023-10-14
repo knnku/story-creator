@@ -24,9 +24,16 @@ router.post("/login", (req, res) => {
       if (user) {
         res.json({
           success: true,
-          message: "Login successful!",
+          message: "Login successful as admin!",
           data: user
         });
+      if (guest) {
+        res.json({
+          success: true,
+          message: "Login successful as guest",
+          data: user
+        })
+      }
       } else {
         res.json({
           success: false,
