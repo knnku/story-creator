@@ -10,6 +10,11 @@ const router  = express.Router();
 
 router.get('/', (req, res) => {
   res.render('users');
-}); 
+});
+
+
+router.post('/login', (req, res) => {
+  res.redirect('/')
+})
 
 module.exports = router;
