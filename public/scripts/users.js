@@ -1,17 +1,30 @@
 // Client facing scripts here
-$(() => {
-  $('#fetch-users').on('click', () => {
+
+$(document).ready(function () {
+
+  $('#login').on('click', () => {
+    event.preventDefault();
+
+    const $userInput = $('#login-form').serialize();
+    console.log($userInput);
+
+    console.log('login button clicked!!');
     $.ajax({
-      method: 'GET',
-      url: '/api/users'
+      method: 'POST',
+      url: '/users/login',
+      data: $userInput
     })
     .done((response) => {
-      const $usersList = $('#users');
-      $usersList.empty();
 
-      for(const user of response.users) {
-        $(`<li class="user">`).text(user.name).appendTo($usersList);
-      }
+      // const $user= $('#users');
+      // $usersList.empty();
+
+      // for(const user of response.users) {
+      //   $(`<li class="user">`).text(user.name).appendTo($usersList);
+      // }
     });
   });
+
+
+console.log('dom ready');
 });

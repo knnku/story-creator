@@ -15,12 +15,8 @@ router.get("/", (req, res) => {
 
 router.post("/login", (req, res) => {
   console.log('field-input: ', req.body.username); //test
-
   const userName = req.body.username;
   const user = getUser(userName);
-
-  
-
   res.redirect("/");
 });
 
