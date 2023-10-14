@@ -17,7 +17,29 @@ router.post("/login", (req, res) => {
   console.log('field-input: ', req.body.username); //test
   const userName = req.body.username;
   const user = getUser(userName);
-  res.redirect("/");
+
+  getUser(userName)
+    .then(user => {
+      console.log("Promise from database:", user);
+      if (user) {
+        res.json({
+          success: true,
+          message: "Login successful!",
+          data: user
+        });
+      } else {
+        res.json({
+          success: false,
+          message: "User not found!"
+        });
+      }
+    })
+    .catch(err => {
+      console.log("Error fetching user:", error);
+      // res.json();
+    })
+
 });
 
 module.exports = router;
+

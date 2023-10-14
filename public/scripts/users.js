@@ -2,11 +2,10 @@
 
 $(document).ready(function () {
 
-  $('#login').on('click', () => {
+  $('#login').on('click', (event) => {
     event.preventDefault();
 
     const $userInput = $('#login-form').serialize();
-    console.log($userInput);
 
     console.log('login button clicked!!');
     $.ajax({
@@ -15,16 +14,22 @@ $(document).ready(function () {
       data: $userInput
     })
     .done((response) => {
-
-      // const $user= $('#users');
-      // $usersList.empty();
-
-      // for(const user of response.users) {
-      //   $(`<li class="user">`).text(user.name).appendTo($usersList);
-      // }
-    });
+      console.log(response);
+      
+      if(response.success) {
+        $('#message').text(response.message).show();
+      } else {
+        $('#message').text(response.message || "Error logging in.").show()
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
   });
 
 
-console.log('dom ready');
+console.log('DOM ready!');
 });
+
+
+

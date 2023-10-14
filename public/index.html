@@ -17,22 +17,18 @@
 </head>
 
 <body>
-  <p>Hello World!</p>
-
-  <form id="login-form">
-    <!--Obtain user email-->
-    <div class="form-group">
-      <label for="username">Email address</label><br>
-      <input type="username" id="username" name="username" placeholder="Enter username" class="form-control" style="width: 300px">
-    </div>
-    <!--Obtain user password-->
-    <div class="form-group">
-      <label for="email">Password</label><br>
-      <input type="password" id="password" name="password" placeholder="Password" class="form-control" style="width: 300px">
-    </div>
-    <!--Submit obtained login credentials-->
-    <input type="submit" value="Login" class="btn btn-primary mt-2" id="login">
-  </form>
-
+  <main>
+    <h2>Login</h2>
+    <form id="login-form">
+      <!--Obtain user email-->
+      <div class="form-group">
+        <label for="username">User Authorization</label><br>
+        <input type="text" id="username" name="username" placeholder="Identify your authorship" class="form-control" style="width: 300px">
+      </div>
+      <!--Submit obtained login credentials-->
+      <input type="submit" value="Login" class="btn btn-primary mt-2" id="login">
+    </form>
+    <span id="message" style="display: none;"></span>
+  </main>
 </body>
 </html>
