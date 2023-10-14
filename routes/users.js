@@ -6,6 +6,7 @@
  */
 
 const express = require("express");
+const cookieSession = require('cookie-session');
 const { getUser } = require("../db/queries/users");
 const router = express.Router();
 
@@ -22,12 +23,14 @@ router.post("/login", (req, res) => {
     .then(user => {
       console.log("Promise from database:", user);
       if (userName === "admin") {
+        res.cookie('username', 'admin')
         res.json({
           success: true,
           message: "Login successful, admin!",
           data: user
         });
       } else if (userName === "guest") {
+        res.cookie('username', 'guest')
         res.json({
           success: true,
           message: "Login successful, guest!",
