@@ -6,8 +6,7 @@
  */
 
 const express = require("express");
-const cookieSession = require('cookie-session');
-const { getUser } = require("../db/queries/users");
+const { getUser } = require("../db/queries/q-users");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -18,6 +17,8 @@ router.post("/login", (req, res) => {
   console.log('field-input: ', req.body.username); //test
   const userName = req.body.username;
   const user = getUser(userName);
+
+  res.clearCookie("username"); // Clear existing cookie
 
   getUser(userName)
     .then(user => {

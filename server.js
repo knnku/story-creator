@@ -28,17 +28,19 @@ app.use(express.static('public'));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
+// const userApiRoutes = require('./routes/users-api');
+
+//Routes for stories @story-creator
+const storiesRoutes = require('./routes/r-stories');
 
 //Will be using this for login @story-creator
-const usersRoutes = require('./routes/users');
+const usersRoutes = require('./routes/r-users');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 // app.use('/api/users', userApiRoutes);
-// app.use('/api/widgets', widgetApiRoutes);
+app.use('/story', storiesRoutes);
 app.use('/users', usersRoutes);
 
 // Note: mount other resources here, using the same pattern above
