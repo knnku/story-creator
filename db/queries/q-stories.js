@@ -7,7 +7,7 @@ const getStories= () => {
 
   return db.query(query)
     .then(data => {
-      console.log('db-query: ', data.rows); //test
+      // console.log('db-query: ', data.rows); //test
       return data.rows;
     });
 };
