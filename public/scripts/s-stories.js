@@ -6,35 +6,50 @@ $(document).ready(function(){
   $('#story-list').show();
   $('#main-viewer').show();
 
- $('#login').on('click', (event) => {
-   event.preventDefault();
-   const $userInput = $('#login-form').serialize();
+  // Fetch and display stories from the database as soon as the page loads
+  $.ajax({
+    method: 'GET',
+    url: '/stories'
+  })
+  .done(stories => {
+    // Render story to view.
+    stories.forEach(story => {
+      $('#story-list').append(`<div>${story.main_story}</div>`);
+    });
+  })
+  .catch(err => {
+    console.log("Error fetching stories:", err);
+  });
 
-   console.log('Login button clicked!');
+  // Login event handler for type of user.
+  $('#login').on('click', (event) => {
+    event.preventDefault();
+    const $userInput = $('#login-form').serialize();
 
-   $.ajax({
-     method: 'POST',
-     url: 'users/login',
-     data: $userInput
-   })
-   .done(response => {
-     console.log(response);
-     // After login success, check for user type.
-     if (response.success) {
+    console.log('Login button clicked!');
 
-       // If user is 'admin', show button.
-       if (response.userType === 'admin') {
-         $('#add-story').show;
-       // If user is not 'admin', hide button.
-       } else if(response.userType !== 'guest') {
-         $('#add-story').hide;
-       } else {
-         console.log(response.message || 'Error logging in.');
-       }
-     }
-   })
-   .catch(err => {
-     console.log(err.message);
-   });
- });
+    $.ajax({
+      method: 'POST',
+      url: 'users/login',
+      data: $userInput
+    })
+    .done(response => {
+      console.log(response);
+      // After login success, check for user type.
+      if (response.success) {
+        // If user is 'admin', show button.
+        if (response.userType === 'admin') {
+          $('#add-story').show();
+        // If user is not 'admin', hide button.
+        } else {
+          $('#add-story').hide();
+        }
+      } else {
+        console.log(response.message || 'Error logging in.');
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+  });
 });
