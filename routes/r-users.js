@@ -14,15 +14,17 @@ router.get("/", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  console.log('field-input: ', req.body.username); //test
+  console.log('r-users: ', req.body.username); //test
   const userName = req.body.username;
-  const user = getUser(userName);
+  // const user = getUser(userName); ---test, value not needed
+
+  console.log('cookie:',req.cookies);
 
   res.clearCookie("username"); // Clear existing cookie
 
   getUser(userName)
     .then(user => {
-      console.log("Promise from database:", user);
+      // console.log("Promise from database:", user); //test
       if (userName === "admin") {
         res.cookie('username', 'admin')
         res.json({
@@ -47,7 +49,7 @@ router.post("/login", (req, res) => {
     .catch(err => {
       console.log("Error fetching user:", error);
       // res.json();
-    })
+    });
 
 });
 

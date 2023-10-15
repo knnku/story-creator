@@ -4,7 +4,8 @@
 $(document).ready(function () {
   // Initially show stories and main viewer (irrespective of login status)
   $("#story-list").show();
-  $("#main-viewer").show();
+  $("#main-viewer").show(); //we can just show by default
+  $("#add-story").hide(); //hide addstory button in pageLoad
 
   /** ---------------------------------------------------------------------
    * Render stories according to wire frame.
@@ -21,16 +22,6 @@ $(document).ready(function () {
       date_created,
       date_completed,
     } = story;
-
-    console.log(
-      id,
-      user_id,
-      main_story,
-      title,
-      story_status,
-      date_created,
-      date_completed
-    ); //test
 
     const $storyBuild =
     `<article>
@@ -89,11 +80,13 @@ $(document).ready(function () {
       data: $userInput,
     })
       .done((response) => {
-        console.log(response);
+        // console.log('post response:',  response.data[0].username);
+        const userType = response.data[0].username; //Store usertype admin/guest
+
         // After login success, check for user type.
         if (response.success) {
           // If user is 'admin', show button.
-          if (response.userType === "admin") {
+          if (userType === "admin") {
             $("#add-story").show();
             // If user is not 'admin', hide button.
           } else {
