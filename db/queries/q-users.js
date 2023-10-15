@@ -6,7 +6,7 @@ const getUser = (username) => {
 
   return db.query(query, values)
     .then(data => {
-      console.log('db-query: ', data.rows); //test
+      // console.log('db-query: ', data.rows); //test
       return data.rows;
     });
 };

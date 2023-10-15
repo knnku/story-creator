@@ -6,22 +6,19 @@
  */
 
 const express = require('express');
+const { getStories } = require('../db/queries/q-stories');
 const router  = express.Router();
-const db = require('../db/connection');
 
-router.get('/', (req, res) => {
-  const query = `SELECT * FROM widgets`;
-  console.log(query);
-  db.query(query)
-    .then(data => {
-      const widgets = data.rows;
-      res.json({ widgets });
+router.get('/stories', (req, res) => {
+  getStories()
+    .then(stories => {
+      res.json(stories);
     })
     .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+      console.error("Error fetching stories:", err);
+      // Catch the internal server error.
+      res.status(500).json({ error: "Internal server error "});
+    })
 });
 
 module.exports = router;
