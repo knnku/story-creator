@@ -18,7 +18,8 @@
 
   <!-- App JS -->
   <script type="text/javascript" src="./scripts/app.js"></script>
-  <script type="text/javascript" src="./scripts/users.js"></script>
+  <script type="text/javascript" src="./scripts/s-users.js"></script>
+  <script type="text/javascript" src="./scripts/s-stories.js"></script>
 </head>
 <body>
   <main>
@@ -34,11 +35,14 @@
     </form>
     <span id="message" style="display: none;"></span>
     <!-- Story view -->
-    <section class="story-list">Populated stories from database appear on left-hand-side.</section>
-    <input type="submit" value="Add story" class="btn btn-primary mt-2" id="add-story">
+    <section class="story-list">
+      <h1>List of Stories</h1>
+      <input type="submit" value="Add story" class="btn btn-primary mt-2" id="add-story">
+      <p>Viewing column intended to appear on left-hand-side.</p>
+    </section>
     <section class="">
       <h1>Story Creator</h1>
-      <p>Viewing column appear on right-hand-side.</p>
+      <p>Viewing column intended to appear on right-hand-side.</p>
       <h3>Tell your story.</h3>
     </section>
   </main>
