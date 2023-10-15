@@ -14,11 +14,11 @@ router.get("/", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  console.log('r-users: ', req.body.username); //test
+  console.log('r-users input: ', req.body.username); //test
   const userName = req.body.username;
   // const user = getUser(userName); ---test, value not needed
 
-  console.log('cookie:',req.cookies);
+  console.log('cookie:',req.cookies); //read cookie in browser test
 
   res.clearCookie("username"); // Clear existing cookie
 
