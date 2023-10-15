@@ -15,6 +15,7 @@ app.set('view engine', 'ejs');
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   '/styles',
@@ -40,7 +41,7 @@ const usersRoutes = require('./routes/r-users');
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 // app.use('/api/users', userApiRoutes);
-app.use('/story', storiesRoutes);
+app.use('/', storiesRoutes);
 app.use('/users', usersRoutes);
 
 // Note: mount other resources here, using the same pattern above
@@ -52,6 +53,12 @@ app.use('/users', usersRoutes);
 // app.get('/', (req, res) => {
 //   res.render('index');
 // });
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
