@@ -32,12 +32,12 @@ $(document).ready(function () {
       date_completed
     ); //test
 
-    const $storyElement =
+    const $storyBuild =
     `<article>
 
       <header>
-      <h2>Created By: ${user_id}</h2>
-      <h2>${title}</h2>
+      <h3>Created by user: #${user_id}</h2>
+      <h3>${title}</h2>
       </header>
 
       <p>${main_story}</p>
@@ -45,12 +45,12 @@ $(document).ready(function () {
       <footer>
       <div>${story_status}</div>
       <div>${date_created}</div>
-      <div>${date_completed}}</div>
+      <div>${date_completed}</div>
       </footer>
 
     </article>`;
 
-    return $storyElement;
+    return $storyBuild;
   };
 
   // Fetch and display stories from the database as soon as the page loads
@@ -64,8 +64,8 @@ $(document).ready(function () {
       // Render story to view.
       stories.forEach((story) => {
         // $('#story-list').append(`<div>${story.main_story}</div>`);
-         const storyOuput = createStoryElement(story);
-        $('.story-list').prepend(storyOuput)
+         const $storyElement = createStoryElement(story);
+        $('.story-list').append($storyElement) // Semantically should be id as we are pointing to a spcific container for stories
       });
     })
     .catch((err) => {
