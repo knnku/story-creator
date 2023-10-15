@@ -6,20 +6,30 @@ $(document).ready(function(){
   $('#story-list').show();
   $('#main-viewer').show();
 
+  /** ---------------------------------------------------------------------
+   * Render stories according to wire frame.
+   * --------------------------------------------------------------------- */
+
+  
+
+  /** ---------------------------------------------------------------------
+   * End of rendering code block.
+   * --------------------------------------------------------------------- */
+
   // Fetch and display stories from the database as soon as the page loads
-  $.ajax({
-    method: 'GET',
-    url: '/stories'
-  })
-  .done(stories => {
-    // Render story to view.
-    stories.forEach(story => {
-      $('#story-list').append(`<div>${story.main_story}</div>`);
-    });
-  })
-  .catch(err => {
-    console.log("Error fetching stories:", err);
-  });
+  // $.ajax({
+  //   method: 'GET',
+  //   url: '/stories'
+  // })
+  // .done(stories => {
+  //   // Render story to view.
+  //   stories.forEach(story => {
+  //     $('#story-list').append(`<div>${story.main_story}</div>`);
+  //   });
+  // })
+  // .catch(err => {
+  //   console.log("Error fetching stories:", err);
+  // });
 
   // Login event handler for type of user.
   $('#login').on('click', (event) => {
