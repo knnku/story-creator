@@ -34,11 +34,12 @@ $(document).ready(function () {
       date_completed,
     } = story;
 
-    const $storyBuild = `<article>
+    const $storyBuild = `
+      <article class="story">
 
-      <header>
-      <h3>Created by user: #${user_id}</h2>
-      <h3>${title}</h2>
+      <header class="story-header">
+      <h3>${title}</h3>
+      <i>Creator: #${user_id}</i>
       </header>
 
       <p>${main_story}</p>
@@ -66,7 +67,7 @@ $(document).ready(function () {
       stories.forEach((story) => {
         // $('#story-list').append(`<div>${story.main_story}</div>`);
         const $storyElement = createStoryElement(story);
-        $(".story-list").append($storyElement); // Semantically should be id as we are pointing to a spcific container for stories
+        $("#story-list").append($storyElement);
       });
     })
     .catch((err) => {

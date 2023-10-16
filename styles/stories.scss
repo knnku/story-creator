@@ -1,7 +1,23 @@
-#story-list-container {
-  overflow-y: scroll;
-}
+@import 'variables';
 
 #story-list-container {
-  background: aquamarine;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: hidden;
+  background: $compliment;
 }
+
+#story-list-container h2 {
+  padding-top: 18px;
+}
+
+.story {
+  background-color: $bright-bg;
+  border-radius: 8px;
+  margin: 15px;
+  padding: 10px;
+  color: black;
+  min-width: 20em;
+}
+
