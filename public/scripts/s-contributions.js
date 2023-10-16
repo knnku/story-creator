@@ -1,8 +1,7 @@
-// Contribution Scripts
 $(document).ready(function () {
 
   /** ---------------------------------------------------------------------
-   * Render stories according to wire frame.
+   * Render stories.
    * --------------------------------------------------------------------- */
   const createStoryElement = (story) => {
     const {
@@ -32,6 +31,7 @@ $(document).ready(function () {
         <div class="contribution-form" style="display:none;">
             <textarea class="contribution-text" placeholder="Write your contribution here..."></textarea>
             <input type="submit" value="Submit Contribution">
+            <button class="cancel-contribution">Cancel</button>
         </div>
 
       </footer>
@@ -57,22 +57,29 @@ $(document).ready(function () {
     });
 
   /** ---------------------------------------------------------------------
-   * Event Handler for Contribution.
+   * Event Handlers for Contributions.
    * --------------------------------------------------------------------- */
-    // Event handler for showing the contribution modal
-    $(".story-list").on("click", ".contribute-to-story", function() {
-      // Toggle the form's visibility
-      $(this).siblings('.contribution-form').toggle();
+
+  // Event handler for showing the contribution modal
+  $(".story-list").on("click", ".contribute-to-story", function() {
+    // Toggle the form's visibility.
+    $(this).siblings('.contribution-form').toggle();
   });
 
-  // Event handler for submitting a contribution
+  // Event handler for cancelling contribution.
+  $(".story-list").on("click", ".cancel-contribution", function() {
+    // Hide the form.
+    $(this).parent('.contribution-form').hide();
+  });
+
+  // Event handler for submitting a contribution.
   $("#contribution-form").on("submit", function(event) {
       event.preventDefault();
 
       const storyId = $("#contribution-modal").data("story-id");
       const contributionText = $("#contribution-text").val();
 
-      // Make an AJAX POST request to send the contribution to the server
+      // Make an AJAX POST request to send the contribution to the server.
       $.ajax({
           method: "POST",
           url: `/stories/${storyId}/contribute`,

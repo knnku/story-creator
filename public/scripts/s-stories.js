@@ -1,13 +1,10 @@
-// Story Scripts
-// if neither admin or guest, stories are still shown by default
-
 $(document).ready(function () {
   // Initially show stories and main viewer (irrespective of login status)
   $("#story-list").show();
   $("#main-viewer").show(); //we can just show by default
 
   /** ---------------------------------------------------------------------
-   * Hide and Persist addstory login button.
+   * Hide and Persist add-story login button.
    * --------------------------------------------------------------------- */
   const usrCookie = (document.cookie);
   const queryToUser = usrCookie.split("=") //bruteforce cookie params to get admin
@@ -15,11 +12,11 @@ $(document).ready(function () {
   console.log(queryToUser[1]);
 
   if (queryToUser[1] !== "admin") {
-     $("#add-story").hide(); //hide addstory button in pageLoad
+     $("#add-story").hide(); //hide add-story button in pageLoad
   }
 
   /** ---------------------------------------------------------------------
-   * Render stories according to wire frame.
+   * Render stories viewer.
    * --------------------------------------------------------------------- */
 
   // Build tweet element and hydrate with object data from db
