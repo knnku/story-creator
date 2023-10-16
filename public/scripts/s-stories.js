@@ -71,7 +71,7 @@ $(document).ready(function () {
     });
 
   /** ---------------------------------------------------------------------
-   * End of rendering code block.
+   * End of rendering block.
    * --------------------------------------------------------------------- */
 
   // Login event handler for type of user.
@@ -107,4 +107,31 @@ $(document).ready(function () {
         console.log(err.message);
       });
   });
+
+  // Event handler for adding story.
+  $("#add-story").on("click", function() {
+    // Toggle the story creation form's visibility
+    $(".story-creation-form").toggle();
+  });
+
+  // Event handler for story submission.
+  $("#submit-story").on("click", function() {
+    const storyText = $("#new-story-text").val();
+    const storyTitle = $("#new-story-title").val();
+
+    // TODO: Implement the logic to send the new story to the server.
+    // This could be an AJAX POST request, similar to the login example.
+
+    // For now:
+    console.log(`New story titled "${storyTitle}" added with text: ${storyText}`);
+  });
+
+  // Event handler for cancelling story submission.
+  $("#cancel-story").on("click", function() {
+    // Hide the story creation form and reset its fields
+    $(".story-creation-form").hide();
+    $("#new-story-text").val('');
+    $("#new-story-title").val('');
+  });
+
 });
