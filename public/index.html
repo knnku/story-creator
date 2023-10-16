@@ -14,6 +14,8 @@
   <!-- App CSS -->
   <link rel="stylesheet" href="./styles/main.css" type="text/css" />
   <link rel="stylesheet" href="./styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="./styles/stories.css" type="text/css" />
+  <link rel="stylesheet" href="./styles/stories.css" type="text/css" />
 
 
   <!-- External JS -->
@@ -30,18 +32,28 @@
   <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Story Teller</a>
+
+      <!-- Mobile dropdown -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
+          <li class="nav-item" id="add-story">
             <a class="nav-link active" aria-current="page" href="#">Add Story+</a>
           </li>
         </ul>
 
-        <!--Obtain username-->
+        <!--Message for authorization-->
+        <div id="login-message" style="display: none;">
+          <span></span>
+          <button class="btn btn-secondary" type="submit" id="logout">Logout</button>
+        </div>
+
+        <!--Login form - authorize user-->
         <form class="d-flex" role="login" id="login-form">
           <input class="form-control me-2" type="text" id="username" name="username" placeholder="Identify your Authorship" aria-label="Search">
           <button class="btn btn-success" type="submit" id="login">Login</button>
@@ -52,34 +64,26 @@
   </nav>
 
   <main>
-    <div>
-    <h2>Login</h2>
 
-    <form id="login-form">
-      <!--Obtain username-->
-      <div class="form-group">
-        <label for="username">User Authorization</label><br>
-        <input type="text" id="username" name="username" placeholder="Identify your authorship" class="form-control" style="width: 300px">
-      </div>
-      <!--Submit obtained login credentials-->
-      <input type="submit" value="Login" class="btn btn-primary mt-2" id="login">
-    </form>
-    <span id="message" style="display: none;"></span>
+    <!-- Story List -->
+    <div id="story-list-container" class="col-md-4">
+      <section class="story-list">
+        <h2>List of Stories</h2>
+        <p>Viewing column intended to appear on left-hand-side.</p>
+      </section>
+    </div>
 
-    <!-- Story view -->
-    <section class="story-list">
-      <h1>List of Stories</h1>
-      <input type="submit" value="Add story" class="btn btn-primary mt-2" id="add-story">
-      <p>Viewing column intended to appear on left-hand-side.</p>
-    </section>
-
-    <section class="">
-      <h1>Story Creator</h1>
-      <p>Viewing column intended to appear on right-hand-side.</p>
-      <h3>Tell your story.</h3>
-    </section>
-    </form>
+    <!-- Story View -->
+    <div id="story-view" class="col-md-8">
+      <section class="">
+        <h1>Story Creator</h1>
+        <p>Viewing column intended to appear on right-hand-side.</p>
+        <h3>Tell your story.</h3>
+      </section>
+    </div>
 
   </main>
+
 </body>
+
 </html>
