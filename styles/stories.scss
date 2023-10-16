@@ -15,9 +15,26 @@
 .story {
   background-color: $bright-bg;
   border-radius: 8px;
-  margin: 15px;
-  padding: 10px;
+  margin: 18px;
+  padding: 15px;
   color: black;
   min-width: 20em;
 }
 
+.story h4 {
+  margin-bottom: 0px;
+}
+
+.story header {
+  margin-bottom: 20px;
+}
+
+.story footer {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.7em;
+}
+
+.story footer div{
+  margin: 2px;
+}

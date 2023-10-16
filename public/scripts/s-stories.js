@@ -38,16 +38,16 @@ $(document).ready(function () {
       <article class="story">
 
       <header class="story-header">
-      <h3>${title}</h3>
+      <h4>${title}</h4>
       <i>Creator: #${user_id}</i>
       </header>
 
       <p>${main_story}</p>
 
       <footer>
-      <div>${story_status}</div>
-      <div>${date_created}</div>
-      <div>${date_completed}</div>
+      <div>Open: ${story_status}</div>
+      <div>Date Created: ${date_created}</div>
+      <div>Date Completed: ${date_completed}</div>
       </footer>
 
     </article>`;
