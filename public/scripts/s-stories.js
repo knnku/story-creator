@@ -127,7 +127,7 @@ $(document).ready(function () {
       data: {
         main_story: storyText,
         title: storyTitle,
-        // user_id: queryToUser[1] // TODO: validate with session cookie.
+        // user_id: user_id // TODO: validate with session cookie.
       }
     })
     .done(function(response) {
@@ -143,6 +143,7 @@ $(document).ready(function () {
           const $newStory = $(newStoryHTML); // Convert the string to a jQuery object
           $(".story-list").prepend($newStory);
           $newStory.hide().fadeIn(1000);
+          $('#cancel-story').click();
       }
     })
     .fail(function(error) {
