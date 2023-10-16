@@ -118,22 +118,36 @@ $(document).ready(function () {
   $("#submit-story").on("click", function() {
     const storyText = $("#new-story-text").val();
     const storyTitle = $("#new-story-title").val();
+    console.log(`New story titled "${storyTitle}" added with text: ${storyText}`);
 
+    // Send the new story to the server.
     $.ajax({
-      method: 'POST',
-      url: '/stories',
+      method: "POST",
+      url: "/stories",
       data: {
-        user_id: user_id, // TODO: Check with cookie!
         main_story: storyText,
-        title: storyTitle
-      },
+        title: storyTitle,
+        // user_id: queryToUser[1] // TODO: validate with session cookie.
+      }
     })
-    .done(response => {
-      console.log(response.message);
+    .done(function(response) {
+      if (response.success) {
+          // Clear the form fields.
+          $("#new-story-text").val('');
+          $("#new-story-title").val('');
+
+          alert("Your story has been posted successfully!");
+
+          // Add the new story to the story list.
+          const newStoryHTML = createStoryElement(response.story);
+          const $newStory = $(newStoryHTML); // Convert the string to a jQuery object
+          $(".story-list").prepend($newStory);
+          $newStory.hide().fadeIn(1000);
+      }
     })
-    .catch(err => {
-      console.log("Error adding story: ", err);
-    })
+    .fail(function(error) {
+        alert("There was an error posting your story. Please try again.");
+    });
   });
 
   // Event handler for cancelling story submission.

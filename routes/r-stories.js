@@ -37,7 +37,18 @@ router.post('/stories', (req, res) => {
 
   insertStory(storyValues)
     .then (response => {
-      res.json({ message: "Your story has now begun!", data: response });
+      res.json({
+        success: true,
+        message: "Your story has now begun!",
+        story: {
+          id: response.id, // assuming the inserted story has an 'id' attribute
+          user_id: user_id,
+          main_story: main_story,
+          title: title,
+          story_status: story_status,
+          date_created: date_created
+        }
+      });
     })
     .catch(err => {
       console.error("Error adding story:", err);
