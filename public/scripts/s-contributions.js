@@ -65,13 +65,6 @@ $(document).ready(function () {
       $(this).siblings('.contribution-form').toggle();
   });
 
-  //   $(".story-list").on("click", ".contribute-to-story", function() {
-  //     const storyId = $(this).data("story-id");
-
-  //     // Assign the storyId to the modal for reference when submitting
-  //     $("#contribution-modal").data("story-id", storyId).show();
-  // });
-
   // Event handler for submitting a contribution
   $("#contribution-form").on("submit", function(event) {
       event.preventDefault();
