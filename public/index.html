@@ -20,6 +20,7 @@
   <script type="text/javascript" src="./scripts/app.js"></script>
   <script type="text/javascript" src="./scripts/s-users.js"></script>
   <script type="text/javascript" src="./scripts/s-stories.js"></script>
+  <script type="text/javascript" src="./scripts/s-contributions.js"></script>
 </head>
 <body>
   <main>
@@ -42,11 +43,21 @@
       <p>Viewing column intended to appear on left-hand-side.</p>
     </section>
 
-    <section class="">
+    <section id="story-detail">
       <h1>Story Creator</h1>
       <p>Viewing column intended to appear on right-hand-side.</p>
       <h3>Tell your story.</h3>
     </section>
+
+    <!-- Contribution Modal -->
+    <div id="contribution-modal" style="display:none;">
+      <h3>Contribute to the Story</h3>
+      <form id="contribution-form">
+          <textarea id="contribution-text" placeholder="Write your contribution here..."></textarea>
+          <input type="submit" value="Contribute">
+      </form>
+      <button onclick="$('#contribution-modal').hide();">Close</button>
+    </div>
   </main>
 </body>
 </html>

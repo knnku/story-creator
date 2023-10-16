@@ -1,4 +1,4 @@
-// Client facing scripts here
+// User Scripts
 
 $(document).ready(function () {
 

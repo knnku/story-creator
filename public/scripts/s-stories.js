@@ -1,4 +1,4 @@
-// Story scripts
+// Story Scripts
 // if neither admin or guest, stories are still shown by default
 
 $(document).ready(function () {
