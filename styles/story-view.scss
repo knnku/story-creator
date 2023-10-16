@@ -4,3 +4,21 @@
   overflow-y: scroll;
   background: $bright-bg;
 }
+
+
+#story-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: $hero-color;
+  padding-left: 3em;
+}
+
+#story-view h1 {
+  font-size: 7em;
+  margin: 1em 0px;
+}
+
+#story-view h3 {
+  font-size: 3em;
+}
