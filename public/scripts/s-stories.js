@@ -119,11 +119,21 @@ $(document).ready(function () {
     const storyText = $("#new-story-text").val();
     const storyTitle = $("#new-story-title").val();
 
-    // TODO: Implement the logic to send the new story to the server.
-    // This could be an AJAX POST request, similar to the login example.
-
-    // For now:
-    console.log(`New story titled "${storyTitle}" added with text: ${storyText}`);
+    $.ajax({
+      method: 'POST',
+      url: '/stories',
+      data: {
+        user_id: user_id, // TODO: Check with cookie!
+        main_story: storyText,
+        title: storyTitle
+      },
+    })
+    .done(response => {
+      console.log(response.message);
+    })
+    .catch(err => {
+      console.log("Error adding story: ", err);
+    })
   });
 
   // Event handler for cancelling story submission.
