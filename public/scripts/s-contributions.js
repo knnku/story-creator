@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-   // IMPORTANT: Renders stories.
+  // IMPORTANT: Renders stories.
   const createStoryElement = (story) => {
     const {
       id,
@@ -11,6 +11,22 @@ $(document).ready(function () {
       date_created,
       date_completed,
     } = story;
+
+    let contributeButton = '';
+
+    // If story_status is false (meaning incomplete)
+    if (!story_status) {
+        contributeButton = `
+        <button class="contribute-to-story" data-story-id="${id}">Contribute</button>
+
+        <!-- Contribution form within the story -->
+        <form class="contribution-form" style="display:none;">
+            <textarea class="contribution-text" placeholder="Add your part to this story."></textarea>
+            <input type="submit" value="Submit">
+            <button type="button" class="cancel-contribution">Cancel</button>
+        </form>
+        `;
+    }
 
     const $storyBuild = `
     <article>
@@ -23,15 +39,7 @@ $(document).ready(function () {
         <div>Story completion: ${story_status}</div>
         <div>Date created: ${date_created}</div>
         <div>Date completed: ${date_completed}</div>
-        <button class="contribute-to-story" data-story-id="${id}">Contribute</button>
-
-        <!-- Contribution form within the story -->
-        <div class="contribution-form" style="display:none;">
-            <textarea class="contribution-text" placeholder="Add your part to this story."></textarea>
-            <input type="submit" value="Submit">
-            <button class="cancel-contribution">Cancel</button>
-        </div>
-
+        ${contributeButton}
       </footer>
     </article>
     `;
@@ -63,28 +71,28 @@ $(document).ready(function () {
   // Event handler for cancelling contribution.
   $(".story-list").on("click", ".cancel-contribution", function() {
     // Hide the form.
-    $(this).parent('.contribution-form').hide();
+    $(this).closest('.contribution-form').hide();
   });
 
   // Event handler for submitting a contribution.
-  $("#contribution-form").on("submit", function(event) {
-      event.preventDefault();
+  $(".story-list").on("submit", ".contribution-form", function(event) {
+    event.preventDefault();
 
-      const storyId = $("#contribution-modal").data("story-id");
-      const contributionText = $("#contribution-text").val();
+    const storyId = $(this).siblings(".contribute-to-story").data("story-id");
+    const contributionText = $(this).find(".contribution-text").val();
 
-      // Make an AJAX POST request to send the contribution to the server.
-      $.ajax({
-          method: "POST",
-          url: `/stories/${storyId}/contribute`,
-          data: { contribution: contributionText }
-      })
-      .done(response => {
-          alert(response.message);
-          $("#contribution-modal").hide();
-      })
-      .catch(err => {
-          console.log("Error contributing to the story:", err);
+    // Make an AJAX POST request to send the contribution to the server.
+    $.ajax({
+        method: "POST",
+        url: `/stories/${storyId}/contribute`,
+        data: { contribution: contributionText }
+    })
+    .done(response => {
+        alert(response.message);
+        $(this).hide();
+    })
+    .catch(err => {
+        console.log("Error contributing to the story:", err);
     });
   });
 });
