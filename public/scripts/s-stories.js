@@ -10,7 +10,7 @@ const createStoryElement = story => {
     date_completed,
   } = story;
 
- const $storyBuild = `
+  const $storyBuild = `
       <article class="story">
 
       <header class="story-header">
@@ -29,10 +29,9 @@ const createStoryElement = story => {
     </article>`;
 
     return $storyBuild;
-  };
+};
 
 $(document).ready(function () {
-
   const usrCookie = document.cookie; // Brute force cookie params to get admin.
   const queryToUser = usrCookie.split("=");
 
@@ -44,19 +43,16 @@ $(document).ready(function () {
     method: "GET",
     url: "/stories",
   })
-    .done((stories) => {
-      // console.log(stories); //Test
-
-      // Render story to view.
-      stories.forEach((story) => {
-        // $('#story-list').append(`<div>${story.main_story}</div>`);
-        const $storyElement = createStoryElement(story);
-        $("#story-list").append($storyElement);
-      });
-    })
-    .catch((err) => {
-      console.log("Error fetching stories:", err);
+  .done((stories) => {
+    // Render story to view.
+    stories.forEach(story => {
+      const $storyElement = createStoryElement(story);
+      $("#story-list").prepend($storyElement);
     });
+  })
+  .catch((err) => {
+    console.log("Error fetching stories:", err);
+  });
 
   // Event handler for login with type of user.
   $("#login").on("click", (event) => {
@@ -70,54 +66,28 @@ $(document).ready(function () {
       url: "users/login",
       data: $userInput,
     })
-      .done((response) => {
-        // console.log('post response:',  response.data[0].username);
-        const userType = response.data[0].username; // Store user type admin/guest
+    .done((response) => {
+      const userType = response.data[0].username; // Store user type admin/guest
 
-        // After login success, check for user type.
-        if (response.success) {
-          // If user is 'admin', show button.
-          if (userType === "admin") {
-            $("#add-story").show();
-            // If user is not 'admin', hide button.
-          } else {
-            $("#add-story").hide();
-          }
+      // After login success, check for user type.
+      if (response.success) {
+        // If user is 'admin', show button.
+        if (userType === "admin") {
+          $("#add-story").show();
         } else {
-          console.log(response.message || "Error logging in.");
+          // If user is not 'admin', hide button.
+          $("#add-story").hide();
         }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      } else {
+        console.log(response.message || "Error logging in.");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
   });
 
-  // Event handler for adding story.
-  $("#add-story").on("click", function() {
-    // Toggle the story creation form's visibility
-    $("#story-creation-form").toggle();
-  });
-
-  // Event handler for story submission.
-  $("#submit-story").on("click", function() {
-    const storyText = $("#new-story-text").val();
-    const storyTitle = $("#new-story-title").val();
-    const currentUser = document.cookie.split('=');
-    let user_id = null;
-
-    console.log("submit story button clicked!");
-
-    console.log(currentUser[1]); //current user
-
-    if (currentUser[1] === "admin") {
-      user_id = 1;
-    }
-
-    if (currentUser[1] === "guest") {
-      user_id = 2;
-    }
-
-    console.log(`New story titled "${storyTitle}" added with text: ${storyText}`);
-  });
+  // We have moved the addition logic to the s-add-story.js file,
+  // so no other change is necessary in this file.
 
 });

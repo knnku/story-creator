@@ -69,8 +69,12 @@ $(document).ready(() => {
 
           alert("Your story has been posted successfully!");
 
-          // Refresh the page or handle the successful addition
-          // of the story to the list as you deem fit.
+          // Assuming you have a function createStoryElement in this file or it's globally available:
+          const newStoryHTML = createStoryElement(response.story);
+          const $newStory = $(newStoryHTML); // Convert the string to a jQuery object
+          $("#story-list").prepend($newStory); // Add the new story at the beginning of the list.
+          $newStory.hide().fadeIn(1000);
+          $('#cancel-story').click(); // Hide the creation form.
       }
     })
     .fail(function(error) {
