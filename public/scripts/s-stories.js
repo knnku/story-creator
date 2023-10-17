@@ -1,69 +1,39 @@
 const usrCookie = (document.cookie);
-const queryToUser = usrCookie.split("=") // Brute force cookie params to get admin.
+// Brute force cookie params to get admin.
+const queryToUser = usrCookie.split("=");
+// Build tweet element and hydrate with object data from db.
+const createStoryElement = story => {
+  const {
+    id,
+    user_id,
+    main_story,
+    title,
+    story_status,
+    date_created,
+    date_completed,
+  } = story;
 
+  const $storyBuild = `<article>
+
+    <header>
+    <h3>Created by user: #${user_id}</h2>
+    <h3>${title}</h2>
+    </header>
+
+    <p>${main_story}</p>
+
+    <footer>
+    <div>${story_status}</div>
+    <div>${date_created}</div>
+    <div>${date_completed}</div>
+    </footer>
+
+  </article>`;
+
+  return $storyBuild;
+};
 
 $(document).ready(function () {
-
-  console.log(queryToUser[1]);
-
-  // if (queryToUser[1] !== "admin") {
-  //    $("#add-story").hide(); //hide add-story button in pageLoad
-  // }
-
-  // Build tweet element and hydrate with object data from db.
-  const createStoryElement = (story) => {
-    const {
-      id,
-      user_id,
-      main_story,
-      title,
-      story_status,
-      date_created,
-      date_completed,
-    } = story;
-
-    const $storyBuild = `<article>
-
-      <header>
-      <h3>Created by user: #${user_id}</h2>
-      <h3>${title}</h2>
-      </header>
-
-      <p>${main_story}</p>
-
-      <footer>
-      <div>${story_status}</div>
-      <div>${date_created}</div>
-      <div>${date_completed}</div>
-      </footer>
-
-    </article>`;
-
-    return $storyBuild;
-  };
-
-  // Fetch and display stories from the database as soon as the page loads
-  $.ajax({
-    method: "GET",
-    url: "/stories",
-  })
-    .done((stories) => {
-      // console.log(stories);
-
-      // Render story to view.
-      stories.forEach((story) => {
-        // $('#story-list').append(`<div>${story.main_story}</div>`);
-        const $storyElement = createStoryElement(story);
-        $(".story-list").append($storyElement); // Semantically should be id as we are pointing to a specific container for stories
-      });
-    })
-    .catch((err) => {
-      console.log("Error fetching stories:", err);
-    });
-
-  /** ---------------------------------------------------------------------
-   * End of rendering block.
-   * --------------------------------------------------------------------- */
 
   // Event handler for login with type of user.
   $("#login").on("click", (event) => {
