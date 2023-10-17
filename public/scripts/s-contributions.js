@@ -1,8 +1,6 @@
 $(document).ready(function () {
 
-  /** ---------------------------------------------------------------------
-   * Render stories.
-   * --------------------------------------------------------------------- */
+   // IMPORTANT: Renders stories.
   const createStoryElement = (story) => {
     const {
       id,
@@ -22,15 +20,15 @@ $(document).ready(function () {
       </header>
       <p>${main_story}</p>
       <footer>
-        <div>${story_status}</div>
-        <div>${date_created}</div>
-        <div>${date_completed}</div>
+        <div>Story completion: ${story_status}</div>
+        <div>Date created: ${date_created}</div>
+        <div>Date completed: ${date_completed}</div>
         <button class="contribute-to-story" data-story-id="${id}">Contribute</button>
 
         <!-- Contribution form within the story -->
         <div class="contribution-form" style="display:none;">
-            <textarea class="contribution-text" placeholder="Write your contribution here..."></textarea>
-            <input type="submit" value="Submit Contribution">
+            <textarea class="contribution-text" placeholder="Add your part to this story."></textarea>
+            <input type="submit" value="Submit">
             <button class="cancel-contribution">Cancel</button>
         </div>
 
@@ -55,10 +53,6 @@ $(document).ready(function () {
     .catch((err) => {
       console.log("Error fetching stories for contributions:", err);
     });
-
-  /** ---------------------------------------------------------------------
-   * Event Handlers for Contributions.
-   * --------------------------------------------------------------------- */
 
   // Event handler for showing the contribution modal
   $(".story-list").on("click", ".contribute-to-story", function() {
