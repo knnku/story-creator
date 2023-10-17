@@ -1,10 +1,8 @@
-$(document).ready(function () {
+const usrCookie = (document.cookie);
+const queryToUser = usrCookie.split("=") // Brute force cookie params to get admin.
 
-  /** ---------------------------------------------------------------------
-   * Hide and Persist add-story login button.
-   * --------------------------------------------------------------------- */
-  const usrCookie = (document.cookie);
-  const queryToUser = usrCookie.split("=") // bruteforce cookie params to get admin
+
+$(document).ready(function () {
 
   console.log(queryToUser[1]);
 
@@ -12,11 +10,7 @@ $(document).ready(function () {
   //    $("#add-story").hide(); //hide add-story button in pageLoad
   // }
 
-  /** ---------------------------------------------------------------------
-   * Render stories viewer.
-   * --------------------------------------------------------------------- */
-
-  // Build tweet element and hydrate with object data from db
+  // Build tweet element and hydrate with object data from db.
   const createStoryElement = (story) => {
     const {
       id,
@@ -71,7 +65,7 @@ $(document).ready(function () {
    * End of rendering block.
    * --------------------------------------------------------------------- */
 
-  // Login event handler for type of user.
+  // Event handler for login with type of user.
   $("#login").on("click", (event) => {
     event.preventDefault();
     const $userInput = $("#login-form").serialize();
