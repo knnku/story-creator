@@ -29,12 +29,4 @@ $(document).ready(() => {
     $(".story-creation-form").hide();
   });
 
-  // You can also add listeners for the form submission here if desired.
-  // Example:
-  /*
-  $(document).on('click', '#submit-story', () => {
-    // Logic to handle form submission.
-  });
-  */
-
 });

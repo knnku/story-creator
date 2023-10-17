@@ -23,14 +23,3 @@
   font-size: 3em;
 }
 
-#story-creation-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px; /* This adds some spacing between the stacked children */
-  padding: 20px; /* Some padding around the form for aesthetics */
-  width: 100%;
-  max-width: 400px; /* This restricts the form from becoming too wide on larger screens */
-  margin: 0 auto; /* Centers the form horizontally on the page */
-}
-
