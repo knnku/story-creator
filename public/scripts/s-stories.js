@@ -37,7 +37,7 @@ $(document).ready(function () {
   const queryToUser = usrCookie.split("=");
 
   if (queryToUser[1] !== "admin") {
-    $("#add-story").hide(); //hide addstory button in pageLoad
+    $("#add-story").hide(); //hide add story button in pageLoad
   }
 
   $.ajax({
@@ -72,7 +72,7 @@ $(document).ready(function () {
     })
       .done((response) => {
         // console.log('post response:',  response.data[0].username);
-        const userType = response.data[0].username; //Store usertype admin/guest
+        const userType = response.data[0].username; // Store user type admin/guest
 
         // After login success, check for user type.
         if (response.success) {
