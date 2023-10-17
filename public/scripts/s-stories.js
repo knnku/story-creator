@@ -11,7 +11,7 @@ const createStoryElement = story => {
   } = story;
 
  const $storyBuild = `
-      <article class="story">
+      <article class="story" id="${id}">
 
       <header class="story-header">
       <h4>${title}</h4>
@@ -92,11 +92,11 @@ $(document).ready(function () {
       });
   });
 
-  // Event handler for adding story.
-  $("#add-story").on("click", function() {
-    // Toggle the story creation form's visibility
-    $(".story-creation-form").toggle();
-  });
+  // // Event handler for adding story.
+  // $("#add-story").on("click", function() {
+  //   // Toggle the story creation form's visibility
+  //   $(".story-creation-form").toggle();
+  // });
 
   // Event handler for story submission.
   $("#submit-story").on("click", function() {
