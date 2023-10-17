@@ -79,7 +79,22 @@ $(document).ready(function () {
   $("#submit-story").on("click", function() {
     const storyText = $("#new-story-text").val();
     const storyTitle = $("#new-story-title").val();
+    const currentUser = document.cookie.split('=');
+    let user_id = null;
+
+    console.log(currentUser[1]); //current user
+
+    if (currentUser[1] === "admin") {
+      user_id = 1;
+    }
+
+    if (currentUser[1] === "guest") {
+      user_id = 2;
+    }
+
+
     console.log(`New story titled "${storyTitle}" added with text: ${storyText}`);
+
 
     // Send the new story to the server.
     $.ajax({
@@ -88,7 +103,7 @@ $(document).ready(function () {
       data: {
         main_story: storyText,
         title: storyTitle,
-        // user_id: user_id // TODO: validate with session cookie.
+        user_id: user_id // TODO: validate with session cookie.
       }
     })
     .done(function(response) {
