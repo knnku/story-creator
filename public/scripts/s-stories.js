@@ -13,27 +13,46 @@ const createStoryElement = story => {
     date_completed,
   } = story;
 
-  const $storyBuild = `<article>
+ const $storyBuild = `
+      <article class="story">
 
-    <header>
-    <h3>Created by user: #${user_id}</h2>
-    <h3>${title}</h2>
-    </header>
+      <header class="story-header">
+      <h4>${title}</h4>
+      <i>Creator: #${user_id}</i>
+      </header>
 
-    <p>${main_story}</p>
+      <p>${main_story}</p>
 
-    <footer>
-    <div>${story_status}</div>
-    <div>${date_created}</div>
-    <div>${date_completed}</div>
-    </footer>
+      <footer>
+      <div>Open: ${story_status}</div>
+      <div>Date Created: ${date_created}</div>
+      <div>Date Completed: ${date_completed}</div>
+      </footer>
 
-  </article>`;
+    </article>`;
 
-  return $storyBuild;
-};
+    return $storyBuild;
+  };
 
 $(document).ready(function () {
+
+  $.ajax({
+    method: "GET",
+    url: "/stories",
+  })
+    .done((stories) => {
+      // console.log(stories); //Test
+
+      // Render story to view.
+      stories.forEach((story) => {
+        // $('#story-list').append(`<div>${story.main_story}</div>`);
+        const $storyElement = createStoryElement(story);
+        $("#story-list").append($storyElement);
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching stories:", err);
+    });
 
   // Event handler for login with type of user.
   $("#login").on("click", (event) => {
