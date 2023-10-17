@@ -12,7 +12,7 @@ $(document).ready(function () {
     if (userWho[1] === "admin") {
       $("#add-story").show();
     }
-    // ----- fin
+    // ----- fin.
   }
 
   // Event handler for login.
@@ -36,7 +36,7 @@ $(document).ready(function () {
           if (userType === "admin") {
             $("#add-story").show();
           }
-          // ----- fin
+          // ----- fin.
 
         } else {
           $("#login-message span")
@@ -61,6 +61,10 @@ $(document).ready(function () {
     $("#login-message").hide();
     $("#login-form").addClass("d-flex").show();
     document.cookie = "username=;"
+
+    // WL new - Cancel story creation form when admin logs out.
+    $("#cancel-story").click();
+    // ----- fin.
   });
 
 });
