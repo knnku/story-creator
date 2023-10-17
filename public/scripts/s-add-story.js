@@ -2,25 +2,19 @@ $(document).ready(() => {
 
   const $newStoryForm = () => {
     const storyForm = `
-    <form method="" action="">
-      <label for="title">title</label>
-      <input type="text" id="fname" name="fname"><br><br>
-
-      <label for="lname">Last name:</label>
-      <input type="text" id="lname" name="lname"><br><br>
-
-      <input type="submit" value="Submit">
-    </form>
+      <div class="story-creation-form">
+        <input type="text" id="new-story-title" placeholder="Enter your title.">
+        <textarea id="new-story-text" placeholder="Begin your story!"></textarea>
+        <button id="submit-story">CREATE</button>
+        <button id="cancel-story">Cancel</button>
+      </div>
     `;
-
-
     return storyForm;
   }
 
   $('#add-story').on('click', () => {
     $("#story-view").empty();
-    $('#story-view').append($newStoryForm);
-
+    $(".story-creation-form").show();
   })
 
 });

@@ -105,6 +105,8 @@ $(document).ready(function () {
     const currentUser = document.cookie.split('=');
     let user_id = null;
 
+    console.log("submit story button clicked!");
+
     console.log(currentUser[1]); //current user
 
     if (currentUser[1] === "admin") {
@@ -115,9 +117,7 @@ $(document).ready(function () {
       user_id = 2;
     }
 
-
     console.log(`New story titled "${storyTitle}" added with text: ${storyText}`);
-
 
     // Send the new story to the server.
     $.ajax({
@@ -132,7 +132,7 @@ $(document).ready(function () {
     .done(function(response) {
       if (response.success) {
           // Clear the form fields.
-          $("#new-story-text").val('');
+          $("#new-story-text").val(''); //point to current html forms
           $("#new-story-title").val('');
 
           alert("Your story has been posted successfully!");
@@ -140,7 +140,7 @@ $(document).ready(function () {
           // Add the new story to the story list.
           const newStoryHTML = createStoryElement(response.story);
           const $newStory = $(newStoryHTML); // Convert the string to a jQuery object
-          $(".story-list").prepend($newStory);
+          $(".story-list-container").prepend($newStory);
           $newStory.hide().fadeIn(1000);
           $('#cancel-story').click();
       }
