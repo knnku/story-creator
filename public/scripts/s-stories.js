@@ -95,7 +95,7 @@ $(document).ready(function () {
   // Event handler for adding story.
   $("#add-story").on("click", function() {
     // Toggle the story creation form's visibility
-    $(".story-creation-form").toggle();
+    $("#story-creation-form").toggle();
   });
 
   // Event handler for story submission.
