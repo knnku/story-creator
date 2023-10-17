@@ -1,6 +1,3 @@
-const usrCookie = (document.cookie);
-// Brute force cookie params to get admin.
-const queryToUser = usrCookie.split("=");
 // Build tweet element and hydrate with object data from db.
 const createStoryElement = story => {
   const {
@@ -35,6 +32,13 @@ const createStoryElement = story => {
   };
 
 $(document).ready(function () {
+
+  const usrCookie = document.cookie; // Brute force cookie params to get admin.
+  const queryToUser = usrCookie.split("=");
+
+  if (queryToUser[1] !== "admin") {
+    $("#add-story").hide(); //hide addstory button in pageLoad
+  }
 
   $.ajax({
     method: "GET",
