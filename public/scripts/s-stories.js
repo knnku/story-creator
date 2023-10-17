@@ -35,7 +35,7 @@ $(document).ready(function () {
     } = story;
 
     const $storyBuild = `
-      <article class="story" id="article${id}">
+      <article class="story" id="${id}">
 
       <header class="story-header">
       <h4>${title}</h4>
@@ -112,11 +112,5 @@ $(document).ready(function () {
       });
   });
 
-   $("#story-list").on("click", 'article[id^="article"]', function () {
-     // 'this' refers to the clicked div
-     var clickedDivId = $(this).attr("id");
-     alert("Clicked on " + clickedDivId);
-     // Your click handling logic here
-   });
 
 });
