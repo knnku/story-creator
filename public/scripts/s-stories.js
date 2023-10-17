@@ -1,19 +1,16 @@
 $(document).ready(function () {
-  // Initially show stories and main viewer (irrespective of login status)
-  $("#story-list").show();
-  $("#main-viewer").show(); //we can just show by default
 
   /** ---------------------------------------------------------------------
    * Hide and Persist add-story login button.
    * --------------------------------------------------------------------- */
   const usrCookie = (document.cookie);
-  const queryToUser = usrCookie.split("=") //bruteforce cookie params to get admin
+  const queryToUser = usrCookie.split("=") // bruteforce cookie params to get admin
 
   console.log(queryToUser[1]);
 
-  if (queryToUser[1] !== "admin") {
-     $("#add-story").hide(); //hide add-story button in pageLoad
-  }
+  // if (queryToUser[1] !== "admin") {
+  //    $("#add-story").hide(); //hide add-story button in pageLoad
+  // }
 
   /** ---------------------------------------------------------------------
    * Render stories viewer.
@@ -57,13 +54,13 @@ $(document).ready(function () {
     url: "/stories",
   })
     .done((stories) => {
-      // console.log(stories); //Test
+      // console.log(stories);
 
       // Render story to view.
       stories.forEach((story) => {
         // $('#story-list').append(`<div>${story.main_story}</div>`);
         const $storyElement = createStoryElement(story);
-        $(".story-list").append($storyElement); // Semantically should be id as we are pointing to a spcific container for stories
+        $(".story-list").append($storyElement); // Semantically should be id as we are pointing to a specific container for stories
       });
     })
     .catch((err) => {

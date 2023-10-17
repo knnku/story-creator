@@ -11,7 +11,7 @@ $(document).ready(function () {
       data: $userInput
     })
     .done((response) => {
-  
+
       if(response.success) {
         $('#message').text(response.message).show();
       } else {
@@ -23,8 +23,7 @@ $(document).ready(function () {
     })
   });
 
-
-console.log('DOM ready!');
+  console.log('DOM ready!');
 });
 
 
