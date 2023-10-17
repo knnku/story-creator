@@ -3,7 +3,7 @@ $(document).ready(function () {
   const userWho = usrCookie.split("="); //bruteforce cookie params to get admin
 
   if (userWho[1] === "admin" || userWho[1] === "guest") {
-    $("#login-form").removeClass("d-flex").hide(); //Remove 'd-flex class' becase it overrides hide using !important
+    $("#login-form").removeClass("d-flex").hide(); //Rmv 'd-flex class' becase overrides hide using !important
     $("#login-message span").text(`Welcome, ${userWho[1]}`);
     $("#login-message").show();
   }
@@ -34,8 +34,6 @@ $(document).ready(function () {
       });
   });
 
-  console.log('DOM ready!');
-
   $("#logout").on("click", (event) => {
     event.preventDefault();
 
@@ -47,4 +45,6 @@ $(document).ready(function () {
     document.cookie = "username=;"
   });
 
+
+    console.log("DOM ready!");
 });
