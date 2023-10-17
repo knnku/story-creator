@@ -9,3 +9,5 @@ CREATE TABLE contributions (
   date_created TIMESTAMP,
   proposal_status BOOLEAN
 );
+
+-- TODO: if a contribution is accepted, add to story table as accepted contribution.

@@ -1,5 +1,3 @@
-// Client facing scripts here
-
 $(document).ready(function () {
   const usrCookie = document.cookie;
   const userWho = usrCookie.split("="); //bruteforce cookie params to get admin
@@ -17,9 +15,9 @@ $(document).ready(function () {
     const $userInput = $("#login-form").serialize();
 
     $.ajax({
-      method: "POST",
-      url: "/users/login",
-      data: $userInput,
+      method: 'POST',
+      url: '/users/login',
+      data: $userInput
     })
       .done((response) => {
         // console.log(response);
@@ -39,11 +37,12 @@ $(document).ready(function () {
       });
   });
 
+  console.log('DOM ready!');
+
   $("#logout").on("click", (event) => {
     event.preventDefault();
     //need to post to logout or somehow delete the cookie and then get form back
     userWho = 'noOne';
   });
 
-  console.log("DOM ready!");
 });

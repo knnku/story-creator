@@ -1,84 +1,41 @@
-// Story scripts
-// if neither admin or guest, stories are still shown by default
+const usrCookie = (document.cookie);
+// Brute force cookie params to get admin.
+const queryToUser = usrCookie.split("=");
+// Build tweet element and hydrate with object data from db.
+const createStoryElement = story => {
+  const {
+    id,
+    user_id,
+    main_story,
+    title,
+    story_status,
+    date_created,
+    date_completed,
+  } = story;
+
+  const $storyBuild = `<article>
+
+    <header>
+    <h3>Created by user: #${user_id}</h2>
+    <h3>${title}</h2>
+    </header>
+
+    <p>${main_story}</p>
+
+    <footer>
+    <div>${story_status}</div>
+    <div>${date_created}</div>
+    <div>${date_completed}</div>
+    </footer>
+
+  </article>`;
+
+  return $storyBuild;
+};
 
 $(document).ready(function () {
-  // Initially show stories and main viewer (irrespective of login status)
-  $("#story-list").show();
-  $("#main-viewer").show(); //we can just show by default
 
-  /** ---------------------------------------------------------------------
-   * Hide and Persist addstory login button.
-   * --------------------------------------------------------------------- */
-  const usrCookie = (document.cookie);
-  const queryToUser = usrCookie.split("=") //bruteforce cookie params to get admin
-
-  console.log(queryToUser[1]);
-
-  if (queryToUser[1] !== "admin") {
-     $("#add-story").hide(); //hide addstory button in pageLoad
-  }
-
-  /** ---------------------------------------------------------------------
-   * Render stories according to wire frame.
-   * --------------------------------------------------------------------- */
-
-  // Build tweet element and hydrate with object data from db
-  const createStoryElement = (story) => {
-    const {
-      id,
-      user_id,
-      main_story,
-      title,
-      story_status,
-      date_created,
-      date_completed,
-    } = story;
-
-    const $storyBuild = `
-      <article class="story" id="${id}">
-
-      <header class="story-header">
-      <h4>${title}</h4>
-      <i>Creator: #${user_id}</i>
-      </header>
-
-      <p>${main_story}</p>
-
-      <footer>
-      <div>Open: ${story_status}</div>
-      <div>Date Created: ${date_created}</div>
-      <div>Date Completed: ${date_completed}</div>
-      </footer>
-
-    </article>`;
-
-    return $storyBuild;
-  };
-
-  // Fetch and display stories from the database as soon as the page loads
-  $.ajax({
-    method: "GET",
-    url: "/stories",
-  })
-    .done((stories) => {
-      // console.log(stories); //Test
-
-      // Render story to view.
-      stories.forEach((story) => {
-        // $('#story-list').append(`<div>${story.main_story}</div>`);
-        const $storyElement = createStoryElement(story);
-        $("#story-list").append($storyElement);
-      });
-    })
-    .catch((err) => {
-      console.log("Error fetching stories:", err);
-    });
-
-  /** ---------------------------------------------------------------------
-   * End of rendering code block.
-   * --------------------------------------------------------------------- */
-
-  // Login event handler for type of user.
+  // Event handler for login with type of user.
   $("#login").on("click", (event) => {
     event.preventDefault();
     const $userInput = $("#login-form").serialize();
@@ -112,5 +69,70 @@ $(document).ready(function () {
       });
   });
 
+  // Event handler for adding story.
+  $("#add-story").on("click", function() {
+    // Toggle the story creation form's visibility
+    $(".story-creation-form").toggle();
+  });
+
+  // Event handler for story submission.
+  $("#submit-story").on("click", function() {
+    const storyText = $("#new-story-text").val();
+    const storyTitle = $("#new-story-title").val();
+    const currentUser = document.cookie.split('=');
+    let user_id = null;
+
+    console.log(currentUser[1]); //current user
+
+    if (currentUser[1] === "admin") {
+      user_id = 1;
+    }
+
+    if (currentUser[1] === "guest") {
+      user_id = 2;
+    }
+
+
+    console.log(`New story titled "${storyTitle}" added with text: ${storyText}`);
+
+
+    // Send the new story to the server.
+    $.ajax({
+      method: "POST",
+      url: "/stories",
+      data: {
+        main_story: storyText,
+        title: storyTitle,
+        user_id: user_id // TODO: validate with session cookie.
+      }
+    })
+    .done(function(response) {
+      if (response.success) {
+          // Clear the form fields.
+          $("#new-story-text").val('');
+          $("#new-story-title").val('');
+
+          alert("Your story has been posted successfully!");
+
+          // Add the new story to the story list.
+          const newStoryHTML = createStoryElement(response.story);
+          const $newStory = $(newStoryHTML); // Convert the string to a jQuery object
+          $(".story-list").prepend($newStory);
+          $newStory.hide().fadeIn(1000);
+          $('#cancel-story').click();
+      }
+    })
+    .fail(function(error) {
+        alert("There was an error posting your story. Please try again.");
+    });
+  });
+
+  // Event handler for cancelling story submission.
+  $("#cancel-story").on("click", function() {
+    // Hide the story creation form and reset its fields
+    $(".story-creation-form").hide();
+    $("#new-story-text").val('');
+    $("#new-story-title").val('');
+  });
 
 });
