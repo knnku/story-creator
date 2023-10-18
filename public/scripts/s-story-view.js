@@ -3,7 +3,7 @@
 $(document).ready(() => {
 
   const genStoryView = (story) => {
-     const {
+     let {
        id,
        user_id,
        main_story,
@@ -13,18 +13,26 @@ $(document).ready(() => {
        date_completed,
      } = story;
 
-     const $storyView= `
+     if (story_status) {
+      story_status = "Open."
+     }
+
+     if (!story_status) {
+      story_status = "Closed."
+     }
+
+     const $storyView = `
       <article class="story-view container-sm" id="${id}">
 
       <header class="story-view-header">
-        <h4 class="story-title">${title}</h4>
-        <i class="story-creator">Created By: #${user_id}</i>
+        <h4 class="story-title">"${title}"</h4>
+        <i class="story-creator">Creator: user#${user_id}</i>
       </header>
+      <hr class="hr" />
+      <p class="story-paragraph">${main_story}</p>
 
-      <p>${main_story}</p>
-
-      <footer>
-        <div>Open: ${story_status}</div>
+      <footer class="story-view-footer">
+        <div>Contributions: ${story_status}</div>
         <div>Date Created: ${date_created}</div>
         <div>Date Completed: ${date_completed}</div>
       </footer>

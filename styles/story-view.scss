@@ -1,5 +1,5 @@
 @import 'variables';
-
+// KT General styles for story view hero
 #story-view {
   padding: 15px 0px;
   overflow-y: hidden;
@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: flex-start;
   color: $hero-color;
-  padding-left: 3em;
+  padding: 3em 1em;
 }
 
 #story-view h1 {
@@ -19,10 +19,32 @@
   margin: 1em 0px;
 }
 
-#story-view h3 {
+#story-view h4 {
   font-size: 3em;
 }
 
+//KT Styles for indivual stories
 .story-view {
   color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.story-view-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+.story-paragraph {
+ margin-bottom: 3rem;
+}
+
+.story-view-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
