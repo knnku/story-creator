@@ -8,7 +8,7 @@ $(document).ready(function () {
   if (userWho[1] === "admin" || userWho[1] === "guest") {
 
     $("#login-form").removeClass("d-flex").hide();
-    $("#login-message span").text(`Welcome, ${userWho[1]}`);
+    $("#login-message span").text(`Login successful, ${userWho[1]}!`); // Changed message for consistency.
     $("#login-message").show();
 
     // Show add story button for admins.
@@ -30,20 +30,18 @@ $(document).ready(function () {
     })
     .done((response) => {
       if (response.success) {
-          $("#login-form").removeClass("d-flex").hide();
-          $("#login-message span").text(response.message).show();
-          $("#login-message").show();
+        $("#login-form").removeClass("d-flex").hide();
+        $("#login-message span").text(response.message).show();
+        $("#login-message").show();
 
-          // Check user type from the server's response.
-          if (response.userType === "admin") {
-              $("#add-story").show();
-          } else {
-              $("#add-story").hide();
-          }
+        // Check user type from the server's response.
+        if (response.userType === "admin") {
+          $("#add-story").show();
+        } else {
+          $("#add-story").hide();
+        }
       } else {
-          $("#login-message span")
-              .text(response.message || "Error logging in.")
-              .show();
+        $("#login-message span").text(response.message || "Error logging in.").show();
       }
       })
       .catch((err) => {
