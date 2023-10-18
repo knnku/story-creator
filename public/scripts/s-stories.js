@@ -47,40 +47,40 @@ $(document).ready(function () {
     console.log("Error fetching stories:", err);
   });
 
-  // Event handler for login with type of user.
-  $("#login").on("click", (event) => {
-    event.preventDefault();
-    const $userInput = $("#login-form").serialize();
+  // // Event handler for login with type of user.
+  // $("#login").on("click", (event) => {
+  //   event.preventDefault();
+  //   const $userInput = $("#login-form").serialize();
 
-    console.log("Login button clicked!");
+  //   console.log("Login button clicked!");
 
-    $.ajax({
-      method: "POST",
-      url: "users/login",
-      data: $userInput,
-    })
-    .done((response) => {
-      const userType = userWho[1]; // Store user type admin/guest
+  //   $.ajax({
+  //     method: "POST",
+  //     url: "users/login",
+  //     data: $userInput,
+  //   })
+  //   .done((response) => {
+  //     const userType = userWho[1]; // Store user type admin/guest
 
-      // After login success, check for user type.
-      if (response.success) {
-        // If user is 'admin', show button.
-        if (userType === "admin") {
-          $("#add-story").show();
-        } else {
-          // If user is not 'admin', hide button.
-          $("#add-story").hide();
-        }
-      } else {
-        console.log(response.message || "Error logging in.");
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  });
+  //     // After login success, check for user type.
+  //     if (response.success) {
+  //       // If user is 'admin', show button.
+  //       if (userType === "admin") {
+  //         $("#add-story").show();
+  //       } else {
+  //         // If user is not 'admin', hide button.
+  //         $("#add-story").hide();
+  //       }
+  //     } else {
+  //       console.log(response.message || "Error logging in.");
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.message);
+  //   });
+  // });
 
-  // We have moved the addition logic to the s-add-story.js file,
-  // so no other change is necessary in this file.
+  // // We have moved the addition logic to the s-add-story.js file,
+  // // so no other change is necessary in this file.
 
 });
