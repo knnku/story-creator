@@ -5,7 +5,7 @@ CREATE TABLE stories (
   user_id INTEGER references users ON DELETE CASCADE,
   main_story TEXT NOT NULL,
   title VARCHAR(255) ,
-  story_status BOOLEAN,
+  story_status BOOLEAN DEFAULT,
   date_created TIMESTAMP,
   date_completed DATE
 );

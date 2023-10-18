@@ -1,6 +1,7 @@
 @import 'variables';
-// KT General styles for story view hero
-#story-view {
+
+// KT General styles for story view hero'
+#story-view-container {
   padding: 15px 0px;
   overflow-y: auto;
   max-height: 100vh;
@@ -13,16 +14,16 @@
   word-break: break-word;
 }
 
-#story-view h1 {
+#story-view-container h1 {
   font-size: 7em;
   margin: 1em 0px;
 }
 
-#story-view h4 {
+#story-view-container h4 {
   font-size: 3em;
 }
 
-#story-view hr {
+#story-view-container hr {
   border-color: $hero-color;
   border-top: 3px solid;
   opacity: 100;

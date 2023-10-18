@@ -16,11 +16,11 @@ $(document).ready(() => {
 
   // Event listener for the 'add-story' button.
   $('#add-story').on('click', () => {
-    $("#story-view").empty();
+    $("#story-view-container").empty();
 
     // If the form doesn't already exist in the DOM, append it. Otherwise, just show it.
     if (!$(".story-creation-form").length) {
-        $("#story-view").append($newStoryForm());
+        $("#story-view-container").append($newStoryForm());
     }
     $(".story-creation-form").show();
   });

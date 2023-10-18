@@ -45,11 +45,19 @@ $(document).ready(() => {
         <hr>
       <div class="new-contributions-container container-sm">
         <form class="add-contribution">
-          <label for="exampleFormControlTextarea1" class="form-label">Contribute</label>
+          <label for="exampleFormControlTextarea1" class="form-label">Contribute:</label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea
         </form>
+        <button id="submit-contribution">Submit Contribution</button>
+        <button id="cancel-story">Cancel</button>
       </div>
+      <hr>
+      <div class="contributions-list container">
+      Contributions will live here. Upvote and downvote
+      </div>
+
       `;
+
      return $storyView;
   };
 
@@ -63,9 +71,9 @@ $(document).ready(() => {
       url: `/stories/${storyId}`, //Point to specific ID
     })
       .done((story) => {
-         $("#story-view").empty();
+         $("#story-view-container").empty();
          const $story = genStoryView(story);
-         $("#story-view").append($story);
+         $("#story-view-container").append($story);
       })
       .catch((err) => {
         console.log("Error fetching story:", err);
