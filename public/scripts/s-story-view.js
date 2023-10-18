@@ -14,19 +14,19 @@ $(document).ready(() => {
      } = story;
 
      const $storyView= `
-      <article class="story-view" id="${id}">
+      <article class="story-view container-sm" id="${id}">
 
       <header class="story-view-header">
-      <h4>${title}</h4>
-      <i>Created By: #${user_id}</i>
+        <h4 class="story-title">${title}</h4>
+        <i class="story-creator">Created By: #${user_id}</i>
       </header>
 
       <p>${main_story}</p>
 
       <footer>
-      <div>Open: ${story_status}</div>
-      <div>Date Created: ${date_created}</div>
-      <div>Date Completed: ${date_completed}</div>
+        <div>Open: ${story_status}</div>
+        <div>Date Created: ${date_created}</div>
+        <div>Date Completed: ${date_completed}</div>
       </footer>
 
     </article>`;
