@@ -1,13 +1,22 @@
 $(document).ready(function () {
   const usrCookie = document.cookie;
-  const userWho = usrCookie.split("="); //bruteforce cookie params to get admin
+  const userWho = usrCookie.split("="); // Brute force cookie params to get admin.
 
+  // If a user is already logged in, display a welcome message and handle "admin" functionalities.
   if (userWho[1] === "admin" || userWho[1] === "guest") {
+
     $("#login-form").removeClass("d-flex").hide(); //Rmv 'd-flex class' becase overrides hide using !important
     $("#login-message span").text(`Welcome, ${userWho[1]}`);
     $("#login-message").show();
+
+    // WL new - Show add story button for admins.
+    if (userWho[1] === "admin") {
+      $("#add-story").show();
+    }
+    // ----- fin.
   }
 
+  // Event handler for login.
   $("#login").on("click", (event) => {
     event.preventDefault();
     const $userInput = $("#login-form").serialize();
@@ -18,11 +27,18 @@ $(document).ready(function () {
       data: $userInput
     })
       .done((response) => {
-
         if (response.success) {
           $("#login-form").removeClass("d-flex").hide();
           $("#login-message span").text(response.message).show();
           $("#login-message").show();
+
+          // WL new - Check if the user type is admin and show the "Add Story" button.
+          const userType = response.data[0].username;
+          if (userType === "admin") {
+            $("#add-story").show();
+          }
+          // ----- fin.
+
         } else {
           $("#login-message span")
             .text(response.message || "Error logging in.")
@@ -34,17 +50,21 @@ $(document).ready(function () {
       });
   });
 
+  // Event handler for logout.
   $("#logout").on("click", (event) => {
     event.preventDefault();
 
-    //hide all admin stuff and set cookie to null
+    // Hide all admin stuff and set cookie to null.
     $("#add-story").hide();
     $("#login-message span").hide();
     $("#login-message").hide();
     $("#login-form").addClass("d-flex").show();
     document.cookie = "username=;"
-  });
 
+    // WL new - Cancel story creation form when admin logs out.
+    $("#cancel-story").click();
+    // ----- fin.
+  });
 
     console.log("DOM ready!");
 });

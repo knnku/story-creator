@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./styles/main.css" type="text/css" />
   <link rel="stylesheet" href="./styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="./styles/nav.css" type="text/css" />
+  <link rel="stylesheet" href="./styles/add-story.css" type="text/css" />
   <link rel="stylesheet" href="./styles/stories.css" type="text/css" />
   <link rel="stylesheet" href="./styles/story-view.css" type="text/css" />
 
@@ -47,9 +48,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active  text-light" aria-current="page" id="add-story">Add Story+</a>
-          </li>
+          <li class="nav-item" id="add-story" style="display: none;">
+            <a class="nav-link active text-light" aria-current="page">Add Story+</a>
+        </li>
+
         </ul>
 
         <!--Message for authorization-->
@@ -67,19 +69,8 @@
       </div>
     </div>
     </nav>
-
-<!--
-    <div id="contribution-modal" style="display:none;">
-      <h3>Contribute to the Story</h3>
-      <form id="contribution-form">
-          <textarea id="contribution-text" placeholder="Write your contribution here..."></textarea>
-          <input type="submit" value="Contribute">
-      </form>
-      <button onclick="$('#contribution-modal').hide();">Close</button>
-    </div>
--->
+  
   <main>
-
     <!-- Story List -->
     <div id="story-list-container" class="col-md-4 container-md text-light">
       <h2>Story List</h2>
@@ -92,20 +83,14 @@
     <div id="story-view" class="col-md-8 container-md">
       <section class="app-hero">
 
-        <!-- <div class="story-creation-form">
-          <input type="text" id="new-story-title" placeholder="Enter your title.">
-          <textarea id="new-story-text" placeholder="Begin your story!"></textarea>
-          <button id="submit-story">CREATE</button>
-          <button id="cancel-story">Cancel</button>
-        </div> -->
+        <!-- Default Main View -->
+        <h1>Story<strong>Creator</strong></h1><br>
+        <h3><em>Tell your story.</em></h3>
 
-        <h1>Story</br><b>Creator</b></h1>
-        <h3>Tell your story.</h3>
       </section>
     </div>
 
   </main>
 
 </body>
-
 </html>
