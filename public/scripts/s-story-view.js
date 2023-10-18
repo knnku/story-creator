@@ -28,21 +28,28 @@ $(document).ready(() => {
      const $storyView = `
       <article class="story-view container-sm" id="${id}">
 
-      <header class="story-view-header">
-        <h4 class="story-title">"${title}"</h4>
-        <i class="story-creator">Creator: user#${user_id}</i>
-      </header>
-      <hr class="hr" />
-      <p class="story-paragraph">${main_story}</p>
+        <header class="story-view-header">
+          <h4 class="story-title">"${title}"</h4>
+          <i class="story-creator">Creator: user#${user_id}</i>
+        </header>
+        <hr class="hr" />
+        <p class="story-paragraph">${main_story}</p>
 
-      <footer class="story-view-footer">
-        <div>Contributions: ${story_status}</div>
-        <div>Date Created: ${date_created}</div>
-        <div>Date Completed: ${date_completed}</div>
-      </footer>
+        <footer class="story-view-footer">
+          <div>Contributions: ${story_status}</div>
+          <div>Date Created: ${date_created}</div>
+          <div>Date Completed: ${date_completed}</div>
+        </footer>
 
-    </article>`;
-
+      </article>
+        <hr>
+      <div class="new-contributions-container container-sm">
+        <form class="add-contribution">
+          <label for="exampleFormControlTextarea1" class="form-label">Contribute</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea
+        </form>
+      </div>
+      `;
      return $storyView;
   };
 
