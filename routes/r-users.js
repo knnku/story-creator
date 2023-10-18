@@ -18,7 +18,7 @@ router.post("/login", (req, res) => {
   const userName = req.body.username;
   // const user = getUser(userName); ---test, value not needed
 
-  console.log('cookie:',req.cookies); //read cookie in browser test
+  console.log('r-cookie:',req.cookies); //read cookie in browser test
 
   res.clearCookie("username"); // Clear existing cookie
 

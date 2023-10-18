@@ -12,22 +12,40 @@ const getStories= () => {
     });
 };
 
-const insertStory = (storyValues) => {
-  const query = `
-    INSERT INTO stories (
-    story_id,
-    votes,
-    story_proposal,
-    date_created,
-    proposal_status
-  ) VALUES ($1, $2, $3, $4, $5)`;
+const getStoryById = (storyId) => {
+  const query = "SELECT * FROM stories WHERE id = $1";
+  const values = [storyId];
 
-  const values = [storyValues.story_id, storyValues.votes, storyValues.story_proposal, storyValues.date_created, storyValues.proposal_status]
-  return db.query(query, values)
-    .then(data => {
-      console.log('db-query: ', data.rows); //test
-      return data.rows;
-    });
+  return db.query(query, values).then((data) => {
+    return data.rows[0]; // As we expect only one row
+  });
 };
 
-module.exports = { getStories, insertStory };
+const insertStory = storyValues => {
+  const query = `
+    INSERT INTO stories (
+      user_id,
+      main_story,
+      title,
+      story_status,
+      date_created
+    ) VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
+  `;
+
+  const values = [
+    storyValues.user_id,
+    storyValues.main_story,
+    storyValues.title,
+    storyValues.story_status,
+    storyValues.date_created
+  ];
+
+  return db.query(query, values)
+    .then(data => {
+      console.log('db-query: ', data.rows);
+      return data.rows;
+  });
+};
+
+module.exports = { getStories, insertStory, getStoryById };

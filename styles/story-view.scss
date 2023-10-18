@@ -1,0 +1,28 @@
+@import 'variables';
+
+#story-view {
+  padding: 15px 0px;
+  overflow-y: hidden;
+  background: $bright-bg;
+}
+
+#story-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: $hero-color;
+  padding-left: 3em;
+}
+
+#story-view h1 {
+  font-size: 7em;
+  margin: 1em 0px;
+}
+
+#story-view h3 {
+  font-size: 3em;
+}
+
+.story-view {
+  color: black;
+}

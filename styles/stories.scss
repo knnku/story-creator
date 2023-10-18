@@ -1,0 +1,40 @@
+@import 'variables';
+
+#story-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: hidden;
+  background: $compliment;
+}
+
+#story-list-container h2 {
+  padding-top: 18px;
+}
+
+.story {
+  background-color: $bright-bg;
+  border-radius: 8px;
+  margin: 18px;
+  padding: 15px;
+  color: black;
+  min-width: 20em;
+}
+
+.story h4 {
+  margin-bottom: 0px;
+}
+
+.story header {
+  margin-bottom: 20px;
+}
+
+.story footer {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.7em;
+}
+
+.story footer div{
+  margin: 2px;
+}
