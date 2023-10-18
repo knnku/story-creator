@@ -14,11 +14,15 @@ $(document).ready(() => {
      } = story;
 
      if (story_status) {
-      story_status = "Open."
+      story_status = "Open"
      }
 
      if (!story_status) {
-      story_status = "Closed."
+      story_status = "Closed"
+     }
+
+     if (!date_completed) {
+      date_completed = "N/A"
      }
 
      const $storyView = `
