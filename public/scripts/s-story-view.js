@@ -14,11 +14,11 @@ $(document).ready(() => {
      } = story;
 
      if (story_status) {
-      story_status = "Open"
+      story_status = "Complete"
      }
 
      if (!story_status) {
-      story_status = "Closed"
+      story_status = "Incomplete"
      }
 
      if (!date_completed) {
@@ -36,7 +36,7 @@ $(document).ready(() => {
         <p class="story-paragraph">${main_story}</p>
 
         <footer class="story-view-footer">
-          <div>Contributions: ${story_status}</div>
+          <div>Complete: ${story_status}</div>
           <div>Date Created: ${date_created}</div>
           <div>Date Completed: ${date_completed}</div>
         </footer>
