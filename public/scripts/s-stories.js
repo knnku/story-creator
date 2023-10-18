@@ -31,12 +31,6 @@ const createStoryElement = story => {
 };
 
 $(document).ready(function () {
-  const usrCookie = document.cookie; // Brute force cookie params to get admin.
-  const queryToUser = usrCookie.split("=");
-
-  if (queryToUser[1] !== "admin") {
-    $("#add-story").hide(); //hide add story button in pageLoad
-  }
 
   $.ajax({
     method: "GET",
@@ -66,7 +60,7 @@ $(document).ready(function () {
       data: $userInput,
     })
     .done((response) => {
-      const userType = response.data[0].username; // Store user type admin/guest
+      const userType = userWho[1]; // Store user type admin/guest
 
       // After login success, check for user type.
       if (response.success) {

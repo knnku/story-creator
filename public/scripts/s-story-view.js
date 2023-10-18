@@ -1,5 +1,3 @@
-
-
 $(document).ready(() => {
 
   const genStoryView = (story) => {
@@ -79,7 +77,5 @@ $(document).ready(() => {
         console.log("Error fetching story:", err);
       });
   });
-
-
 
 });

@@ -34,18 +34,17 @@ $(document).ready(() => {
   $(document).on("click", "#submit-story", function() {
     const storyText = $("#new-story-text").val();
     const storyTitle = $("#new-story-title").val();
-    const currentUser = document.cookie.split('=');
     let user_id = null;
 
     console.log("submit story button clicked!");
 
-    console.log(currentUser[1]); //current user
+    console.log(userWho[1]); //current user
 
-    if (currentUser[1] === "admin") {
+    if (userWho[1] === "admin") {
       user_id = 1;
     }
 
-    if (currentUser[1] === "guest") {
+    if (userWho[1] === "guest") {
       user_id = 2;
     }
 
