@@ -4,7 +4,8 @@ $(document).ready(function () {
 
   // If a user is already logged in, display a welcome message and handle "admin" functionalities.
   if (userWho[1] === "admin" || userWho[1] === "guest") {
-    $("#login-form").removeClass("d-flex").hide(); // Remove 'd-flex class' because it overrides hide using !important
+
+    $("#login-form").removeClass("d-flex").hide(); //Rmv 'd-flex class' becase overrides hide using !important
     $("#login-message span").text(`Welcome, ${userWho[1]}`);
     $("#login-message").show();
 
@@ -49,8 +50,6 @@ $(document).ready(function () {
       });
   });
 
-  console.log('DOM ready!');
-
   // Event handler for logout.
   $("#logout").on("click", (event) => {
     event.preventDefault();
@@ -67,4 +66,5 @@ $(document).ready(function () {
     // ----- fin.
   });
 
+    console.log("DOM ready!");
 });

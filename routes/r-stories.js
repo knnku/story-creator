@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const { getStories, insertStory } = require('../db/queries/q-stories');
+const { getStories, insertStory, getStoryById } = require('../db/queries/q-stories');
 const router  = express.Router();
 
 // Endpoint to fetch stories from db.
@@ -53,6 +53,24 @@ router.post('/stories', (req, res) => {
     .catch(err => {
       console.error("Error adding story:", err);
       res.status(500).json({ error: "Internal server error."});
+    })
+});
+
+// Endpoint to retrieve a specific story by ID.
+router.get('/stories/:id', (req, res) => {
+  const storyId = req.params.id;
+
+  getStoryById(storyId)
+    .then(story => {
+      if (story) {
+        res.json(story);
+      } else {
+        res.status(404).json({ error: "Story not found" });
+      }
+    })
+    .catch(err => {
+      console.error(`Error fetching story with ID ${storyId}:`, err);
+      res.status(500).json({ error: "Internal server error "});
     })
 });
 

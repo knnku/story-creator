@@ -18,24 +18,6 @@ router.get('/stories', (req, res) => {
     })
 });
 
-// Endpoint to retrieve a specific story by ID.
-router.get('/stories/:id', (req, res) => {
-  const storyId = req.params.id;
-
-  getStoryById(storyId)
-    .then(story => {
-      if (story) {
-        res.json(story);
-      } else {
-        res.status(404).json({ error: "Story not found" });
-      }
-    })
-    .catch(err => {
-      console.error(`Error fetching story with ID ${storyId}:`, err);
-      res.status(500).json({ error: "Internal server error "});
-    })
-});
-
 // Endpoint to add a contribution to a specific story.
 router.post('/stories/:id/contribute', (req, res) => {
   const storyId = req.params.id;

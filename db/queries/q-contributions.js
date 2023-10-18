@@ -16,16 +16,6 @@ const getStories = () => {
     });
 };
 
-const getStoryById = (storyId) => {
-  const query = 'SELECT * FROM stories WHERE id = $1';
-  const values = [storyId];
-
-  return db.query(query, values)
-    .then(data => {
-      return data.rows[0];  // As we expect only one row
-    });
-};
-
 
 const addContributionToStory = (storyId, contribution) => {
   const query = `

@@ -12,6 +12,15 @@ const getStories= () => {
     });
 };
 
+const getStoryById = (storyId) => {
+  const query = "SELECT * FROM stories WHERE id = $1";
+  const values = [storyId];
+
+  return db.query(query, values).then((data) => {
+    return data.rows[0]; // As we expect only one row
+  });
+};
+
 const insertStory = storyValues => {
   const query = `
     INSERT INTO stories (
@@ -39,4 +48,4 @@ const insertStory = storyValues => {
   });
 };
 
-module.exports = { getStories, insertStory };
+module.exports = { getStories, insertStory, getStoryById };

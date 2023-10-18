@@ -1,10 +1,10 @@
 @import 'variables';
 
 #story-view {
-  overflow-y: scroll;
+  padding: 15px 0px;
+  overflow-y: hidden;
   background: $bright-bg;
 }
-
 
 #story-view {
   display: flex;
@@ -23,3 +23,6 @@
   font-size: 3em;
 }
 
+.story-view {
+  color: black;
+}

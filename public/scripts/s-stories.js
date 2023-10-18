@@ -10,9 +10,8 @@ const createStoryElement = story => {
     date_completed,
   } = story;
 
-  const $storyBuild = `
-      <article class="story">
-
+ const $storyBuild = `
+      <article class="story" id="${id}">
       <header class="story-header">
       <h4>${title}</h4>
       <i>Creator: #${user_id}</i>
