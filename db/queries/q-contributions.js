@@ -18,7 +18,7 @@ const getContributionsById = (storyData) => {
     })
     .catch(err => {
       console.error("Error getting contributions:", err);
-      throw err; // Propagate the error so it can be handled by the caller
+      throw err; // Propagate the error so it can be handled by the caller.
     });
 }
 
