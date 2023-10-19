@@ -1,5 +1,26 @@
 const db = require('../connection');
 
+const getContributionsById = (storyData) => {
+  const story_id = storyData;
+
+  const query = `
+  SELECT *
+  FROM contributions
+  WHERE story_id = $1
+  `;
+
+  values = [story_id];
+
+  return db.query(query, values)
+    .then((response) => {
+      console.log("q-contributions", response.rows);
+    })
+    .catch(err => {
+      console.error("Error getting contributions:", err);
+      throw err; // Propagate the error so it can be handled by the caller
+    });
+}
+
 const addContribution = (contributionData) => {
   const query = `
     INSERT INTO contributions (
@@ -62,4 +83,4 @@ const approveContribution = (contribution_id) => {
     .catch(err => console.error("Error approving contribution:", err));
 };
 
-module.exports = { addContribution, upvoteContribution, approveContribution };
+module.exports = { getContributionsById, addContribution, upvoteContribution, approveContribution };

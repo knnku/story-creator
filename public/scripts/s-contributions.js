@@ -5,6 +5,24 @@ $(document).ready(function () {
      $(".new-contributions-container").hide();
   });
 
+  //KT Event listener for click on storyview to get all contributions
+  $("#story-list").on("click", "article[id]", function () {
+    // 'this' refers to the clicked div
+    var storyId = $(this).attr("id");
+
+    $.ajax({
+      method: "GET",
+      url: `/contributions/story/${storyId}`, //Point to specific ID
+    })
+      .done((contributions) => {
+        console.log(contributions);
+        // $(".contributions-list").append($story);
+      })
+      .catch((err) => {
+        console.log("Error fetching story:", err);
+      });
+  });
+
   // Submitted contribution proposal appears below contribution proposal form.
   const genContributionView = (contribution) => {
 
@@ -56,6 +74,9 @@ $(document).ready(function () {
       alert("There was an error submitting your contribution. Please try again.");
     });
   });
+
+
+
 
   // // Admin view and function for approving contributions.
   // $(document).on('click', '.approve-btn', function() {

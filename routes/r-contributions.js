@@ -1,11 +1,30 @@
 const express = require('express');
 const {
+  getContributionsById,
   addContribution,
   upvoteContribution,
   approveContribution
 } = require('../db/queries/q-contributions');
 
 const router = express.Router();
+
+
+//Endpoint to get contributions by id and show to story-view under
+router.get('/story/:id', (req, res) => {
+  console.log("tryna grab contributions"); //seems like its working but not loggin in nodemon
+  const storyId = req.params.id;
+
+  getContributionsById(storyId)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.error("Error grabbing contributions:", err);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error." });
+    });
+})
 
 // Endpoint to add new contributions to an existing story.
 // KT /contributions is not needed, assume we are in /contributions when working in this file, same with others
