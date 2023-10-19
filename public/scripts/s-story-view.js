@@ -47,7 +47,7 @@ $(document).ready(() => {
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea
         </form>
         <button id="submit-contribution">Submit Contribution</button>
-        <button id="cancel-story">Cancel</button>
+        <button id="cancel-contribution">Cancel</button>
       </div>
       <hr>
       <div class="contributions-list container">
