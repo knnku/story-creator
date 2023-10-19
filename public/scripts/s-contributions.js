@@ -85,28 +85,4 @@ $(document).ready(function () {
       });
   });
 
-  // // Admin view and function for approving contributions.
-  // $(document).on('click', '.approve-btn', function() {
-  //   const contributionId = $(this).closest(".contribution").data("id");
-  //   const contributionText = $(this).siblings("p").text();
-
-  //   $.ajax({
-  //     method: 'POST',
-  //     url: '/contributions/approve',
-  //     data: {
-  //       contribution_id: contributionId
-  //     }
-  //   })
-  //   .done((response) => {
-  //     if (response.success) {
-  //       // Visually merge the contribution below the main story.
-  //       $("#story-text").append("<p>" + contributionText + "</p>");
-  //     } else {
-  //       alert(response.message);
-  //     }
-  //   })
-  //   .fail((error) => {
-  //     alert("There was an error approving the contribution. Please try again.");
-  //   });
-  // });
 });
