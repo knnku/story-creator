@@ -6,6 +6,8 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require("cookie-parser");
+const contributionsRoutes = require('./routes/r-contributions');
+
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -28,6 +30,8 @@ app.use(
   })
  );
 app.use(express.static('public'));
+app.use('/contributions', contributionsRoutes);
+
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
