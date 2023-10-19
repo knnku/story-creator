@@ -53,6 +53,12 @@ $(document).ready(function () {
   });
 
   $("#story-view-container").on("click", "#submit-contribution", () => {
+    // Check if there are any contributions inside the contributions-list container.
+    if ($(".contributions-list .contribution").length > 0) {
+      alert("Only one contribution proposal can be added at a time. Please wait for the current proposal to be resolved.");
+      return; // Exit the event handler
+    }
+
     const contributionInput = $(".contribution-input-text").val(); // KT For some reason it won't work with an id selector
     const storyId = $(".story-view").attr("id"); //KT Grab id from element tag with class story view
 
