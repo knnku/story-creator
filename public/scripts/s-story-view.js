@@ -44,7 +44,7 @@ $(document).ready(() => {
       <div class="new-contributions-container container-sm">
         <form class="add-contribution">
           <label for="exampleFormControlTextarea1" class="form-label">Contribute:</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </form>
         <button id="submit-contribution">Submit Contribution</button>
         <button id="cancel-contribution">Cancel</button>

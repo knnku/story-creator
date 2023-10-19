@@ -1,5 +1,35 @@
 $(document).ready(function () {
 
+  $('#submit-contribution').on('click', () => {
+    const storyProposal = $('#exampleFormControlTextarea1').val();
+    const storyId = $("#story-id").val();  // Assuming you have a hidden input with this id holding the story's id
+
+    $.ajax({
+      method: 'POST',
+      url: '/contributions/add',
+      data: {
+        story_id: storyId,
+        story_proposal: storyProposal
+      }
+    })
+    .done((response) => {
+      if (response.success) {
+        // Append new contribution below the form.
+        const newContribution = `
+        <div class="contribution" data-id="${response.contribution.id}">
+          <p>${storyProposal}</p>
+          <button class="upvote-btn">Upvote</button>
+          ${response.isAdmin ? '<button class="approve-btn">Approve</button>' : ''}
+        </div>`;
+        $(".contributions-list").append(newContribution);
+      } else {
+        alert(response.message);
+      }
+    })
+    .fail((error) => {
+      alert("There was an error submitting your contribution. Please try again.");
+    });
+  });
 
 });
 
