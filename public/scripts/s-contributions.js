@@ -1,20 +1,25 @@
 $(document).ready(function () {
 
+  // Event listener to hide the form when 'Cancel' is clicked.
+  $(document).on('click', '#cancel-contribution', () => {
+     $(".new-contributions-container").hide();
+  });
+
   // Submitted contribution proposal appears below contribution proposal form.
   const genContributionView = (contribution) => {
     let {
-      story_proposal: storyProposal,
-      id: contributionId,
-      user_id: userId,
+      story_proposal,
+      id,
+      user_id,
       votes,
-      date_created: dateCreated,
-      proposal_status: proposalStatus
+      date_created,
+      proposal_status
     } = contribution;
 
     const $contributionView = `
-      <div class="contribution" data-id="${contributionId}">
-        <p>${storyProposal}</p>
-        <small>Proposed on: ${formattedDate} | Status: ${proposalStatus} | Votes: ${votes}</small>
+      <div class="contribution" data-id="${id}">
+        <p>${story_proposal}</p>
+        <small>Proposed on: ${date_created} | Status: ${proposal_status} | Votes: ${votes}</small>
         <button class="upvote-btn">Upvote</button>
         ${isAdmin ? '<button class="approve-btn">Approve</button>' : ''}
       </div>`;
@@ -22,7 +27,7 @@ $(document).ready(function () {
     return $contributionView;
   };
 
-  $('#submit-contribution').on('click', () => {
+  $(document).on('click','#submit-contribution',() => {
     const storyProposal = $('#exampleFormControlTextarea1').val();
     const storyId = $("#story-id").val();
 
