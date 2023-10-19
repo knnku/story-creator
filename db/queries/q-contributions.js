@@ -23,7 +23,9 @@ const addContribution = (contributionData) => {
   ];
 
   return db.query(query, values)
-    .then(response => response.rows[0]) // Return the newly added contribution
+    .then((response) => {
+      console.log("q-contributions:", response.rows);
+    }) // Return the newly added contribution
     .catch(err => {
       console.error("Error adding contribution:", err);
       throw err; // Propagate the error so it can be handled by the caller

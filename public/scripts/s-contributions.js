@@ -9,7 +9,7 @@ $(document).ready(function () {
   const genContributionView = (contribution) => {
 
     let {
-      story_proposal: storyProposal,
+      story_proposal,
       id,
       user_id,
       votes,
@@ -28,19 +28,19 @@ $(document).ready(function () {
     return $contributionView;
   };
 
-  $(document).on('click','#submit-contribution',() => {
-    const storyProposal = $('#contribution-input-text').val('');
-    const storyId = $("article #id").val();
+  $("#story-view-container").on('click','#submit-contribution',() => {
+    const contributionInput = $('.contribution-input-text').val(); // KT For some reason it won't work with an id selector
+    const storyId= $('.story-view').attr('id'); //KT Grab id from element tag with class story view
 
-
-    console.log(storyProposal);
+    console.log("tried to add contribution!") // test
+    console.log("s-contributions:", contributionInput, storyId); //test
 
     $.ajax({
       method: 'POST',
       url: '/contributions/add',
       data: {
         story_id: storyId,
-        story_proposal: storyProposal
+        story_proposal: contributionInput
       }
     })
     .done((response) => {

@@ -8,7 +8,8 @@ const {
 const router = express.Router();
 
 // Endpoint to add new contributions to an existing story.
-router.post('/contributions/add', (req, res) => {
+// KT /contributions is not needed, assume we are in /contributions when working in this file, same with others
+router.post('/add', (req, res) => {
   const { story_id, story_proposal } = req.body;
   const date_created = new Date();
   const user_id = req.cookies.username === 'admin' ? 1 : 2; // Defaulted to anonymous if not admin
@@ -22,14 +23,11 @@ router.post('/contributions/add', (req, res) => {
     proposal_status: false  // Initialized to false
   };
 
-
   addContribution(contributionValues)
     .then(response => {
-      // const isAdmin = req.cookies.username === 'admin';
       res.json({
         success: true,
         message: 'Contribution submitted successfully!',
-        isAdmin,
         contribution: response
       });
     })
