@@ -37,7 +37,7 @@ $(document).ready(function () {
     .done((response) => {
       if (response.success) {
         // Generate the contribution view and insert it right after the contribution form.
-        const newContribution = genContributionView(storyProposal, response.contribution.id, response.isAdmin);
+        const newContribution = genContributionView(storyProposal, response.contribution.id);
         $(".new-contributions-container").after(newContribution);  // Using .after() instead of .append()
       } else {
         alert(response.message);
