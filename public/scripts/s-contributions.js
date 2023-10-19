@@ -1,17 +1,30 @@
 $(document).ready(function () {
 
-  const genContributionView = (storyProposal, contributionId, isAdmin) => {
-    return `
-    <div class="contribution" data-id="${contributionId}">
-      <p>${storyProposal}</p>
-      <button class="upvote-btn">Upvote</button>
-      ${isAdmin ? '<button class="approve-btn">Approve</button>' : ''}
-    </div>`;
+  // Submitted contribution proposal appears below contribution proposal form.
+  const genContributionView = (contribution) => {
+    let {
+      story_proposal: storyProposal,
+      id: contributionId,
+      user_id: userId,
+      votes,
+      date_created: dateCreated,
+      proposal_status: proposalStatus
+    } = contribution;
+
+    const $contributionView = `
+      <div class="contribution" data-id="${contributionId}">
+        <p>${storyProposal}</p>
+        <small>Proposed on: ${formattedDate} | Status: ${proposalStatus} | Votes: ${votes}</small>
+        <button class="upvote-btn">Upvote</button>
+        ${isAdmin ? '<button class="approve-btn">Approve</button>' : ''}
+      </div>`;
+
+    return $contributionView;
   };
 
   $('#submit-contribution').on('click', () => {
     const storyProposal = $('#exampleFormControlTextarea1').val();
-    const storyId = $("#story-id").val();  // Assuming you have a hidden input with this id holding the story's id
+    const storyId = $("#story-id").val();
 
     $.ajax({
       method: 'POST',
@@ -23,9 +36,9 @@ $(document).ready(function () {
     })
     .done((response) => {
       if (response.success) {
-        // Generate the contribution view and append below the form.
+        // Generate the contribution view and insert it right after the contribution form.
         const newContribution = genContributionView(storyProposal, response.contribution.id, response.isAdmin);
-        $(".contributions-list").append(newContribution);
+        $(".new-contributions-container").after(newContribution);  // Using .after() instead of .append()
       } else {
         alert(response.message);
       }
@@ -35,29 +48,29 @@ $(document).ready(function () {
     });
   });
 
-  // Admin view and function for approving contributions.
-  $(document).on('click', '.approve-btn', function() {
-    const contributionId = $(this).closest(".contribution").data("id");
-    const contributionText = $(this).siblings("p").text();
+  // // Admin view and function for approving contributions.
+  // $(document).on('click', '.approve-btn', function() {
+  //   const contributionId = $(this).closest(".contribution").data("id");
+  //   const contributionText = $(this).siblings("p").text();
 
-    $.ajax({
-      method: 'POST',
-      url: '/contributions/approve',
-      data: {
-        contribution_id: contributionId
-      }
-    })
-    .done((response) => {
-      if (response.success) {
-        // Visually merge the contribution below the main story.
-        $("#story-text").append("<p>" + contributionText + "</p>");
-      } else {
-        alert(response.message);
-      }
-    })
-    .fail((error) => {
-      alert("There was an error approving the contribution. Please try again.");
-    });
-  });
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: '/contributions/approve',
+  //     data: {
+  //       contribution_id: contributionId
+  //     }
+  //   })
+  //   .done((response) => {
+  //     if (response.success) {
+  //       // Visually merge the contribution below the main story.
+  //       $("#story-text").append("<p>" + contributionText + "</p>");
+  //     } else {
+  //       alert(response.message);
+  //     }
+  //   })
+  //   .fail((error) => {
+  //     alert("There was an error approving the contribution. Please try again.");
+  //   });
+  // });
 
 });
