@@ -42,7 +42,7 @@ $(document).ready(function () {
     const $contributionView = `
       <div class="contribution" data-id="${id}">
         <p>${story_proposal}</p>
-        <small>Proposed on: ${date_created} | Status: ${proposal_status} | Votes: ${votes}</small>
+        <small>Proposed on: ${date_created} | Proposal Status: ${proposal_status} | Votes: ${votes}</small>
         <button class="upvote-btn">Upvote</button>
       </div>`;
 
@@ -68,12 +68,16 @@ $(document).ready(function () {
     })
       .done((response) => {
         if (response.success) {
-          // Generate the contribution view and insert it right after the contribution form.
-          const newContribution = genContributionView(
-            storyProposal,
-            response.contribution.id
-          );
-          $(".new-contributions-container").after(newContribution); // Using .after() instead of .append()
+          // Clear the form field.
+          $(".contribution-input-text").val('');
+
+          alert("Your contribution has been proposed successfully!");
+
+          // Add contribution to the contributions list.
+          const newContributionHTML = createContributionElement(response.contribution);
+          const $newContribution = $(newContributionHTML); // Convert the string to a jQuery object
+          $(".contributions-list").prepend($newContribution); // Add the new contribution at the beginning of the list.
+          $newContribution.hide().fadeIn(1000);
         } else {
           alert(response.message);
         }
