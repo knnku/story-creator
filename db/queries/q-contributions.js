@@ -47,6 +47,7 @@ const addContribution = (contributionData) => {
   return db.query(query, values)
     .then((response) => {
       console.log("q-contributions:", response.rows);
+      return response.rows[0]; // WL - fixed the loading issue.
     }) // Return the newly added contribution
     .catch(err => {
       console.error("Error adding contribution:", err);
