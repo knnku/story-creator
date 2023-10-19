@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Submitted contribution proposal appears below contribution proposal form.
-  const genContributionView = (contribution) => {
+  const genContributionView = (contribution, isAdmin) => {
     let {
       story_proposal,
       story_id,
@@ -12,6 +12,11 @@ $(document).ready(function () {
       proposal_status,
     } = contribution;
 
+    const adminButtons = isAdmin ? `
+    <button class="approve-btn">Approve</button>
+    <button class="reject-btn">Reject</button>
+    ` : '';
+
     const $contributionView = `
       <div class="contribution" data-id="${id}">
         <p>${story_proposal}</p>
@@ -21,7 +26,6 @@ $(document).ready(function () {
 
     return $contributionView;
 
-    // ${isAdmin ? '<button class="approve-btn">Approve</button>' : ''} --- we will base this on cookie
   };
 
   // Event listener to hide the form when 'Cancel' is clicked.
