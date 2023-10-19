@@ -7,8 +7,9 @@ $(document).ready(function () {
 
   // Submitted contribution proposal appears below contribution proposal form.
   const genContributionView = (contribution) => {
+
     let {
-      story_proposal,
+      story_proposal: storyProposal,
       id,
       user_id,
       votes,
@@ -28,8 +29,11 @@ $(document).ready(function () {
   };
 
   $(document).on('click','#submit-contribution',() => {
-    const storyProposal = $('#exampleFormControlTextarea1').val();
-    const storyId = $("#story-id").val();
+    const storyProposal = $('#contribution-input-text').val('');
+    const storyId = $("article #id").val();
+
+
+    console.log(storyProposal);
 
     $.ajax({
       method: 'POST',

@@ -22,7 +22,6 @@ router.post('/contributions/add', (req, res) => {
     proposal_status: false  // Initialized to false
   };
 
-  console.log(contributionValues);
 
   addContribution(contributionValues)
     .then(response => {
