@@ -50,9 +50,7 @@ $(document).ready(() => {
         <button id="cancel-contribution">Cancel</button>
       </div>
       <hr>
-      <div class="contributions-list container">
-      Contributions will live here. Upvote and downvote
-      </div>
+      <div class="contributions-list container"></div>
 
       `;
 
