@@ -15,8 +15,12 @@ router.get('/story/:id', (req, res) => {
   const storyId = req.params.id;
 
   getContributionsById(storyId)
-    .then((response) => {
-      console.log(response);
+    .then(response => {
+      res.json({
+        success: true,
+        message: 'Contributions gathered successfully',
+        contributions: response
+      });
     })
     .catch((err) => {
       console.error("Error grabbing contributions:", err);

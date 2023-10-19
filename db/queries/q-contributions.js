@@ -12,8 +12,9 @@ const getContributionsById = (storyData) => {
   values = [story_id];
 
   return db.query(query, values)
-    .then((response) => {
-      console.log("q-contributions", response.rows);
+    .then((data) => {
+      // console.log("q-contributions", data.rows); //test
+      return data.rows;
     })
     .catch(err => {
       console.error("Error getting contributions:", err);
