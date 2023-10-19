@@ -34,6 +34,8 @@ $(document).ready(() => {
   $(document).on("click", "#submit-story", function() {
     const storyText = $("#new-story-text").val();
     const storyTitle = $("#new-story-title").val();
+
+    let userWho = document.cookie.split("="); //KT Grab cookie info and dfine if admin or not
     let user_id = null;
 
     console.log("submit story button clicked!");
