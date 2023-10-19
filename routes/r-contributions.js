@@ -22,9 +22,11 @@ router.post('/contributions/add', (req, res) => {
     proposal_status: false  // Initialized to false
   };
 
+  console.log(contributionValues);
+
   addContribution(contributionValues)
     .then(response => {
-      const isAdmin = req.cookies.username === 'admin';
+      // const isAdmin = req.cookies.username === 'admin';
       res.json({
         success: true,
         message: 'Contribution submitted successfully!',
