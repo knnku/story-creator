@@ -55,6 +55,21 @@ const addContribution = (contributionData) => {
     });
 };
 
+const deleteContribution = (contribution_id) => {
+  const query = `
+    DELETE FROM contributions
+    WHERE id = $1
+  `;
+
+  const values = [contribution_id];
+
+  return db.query(query, values)
+    .catch(err => {
+      console.error("Error deleting contribution:", err);
+      throw err;
+    });
+}
+
 const getContributionById = (contribution_id) => {
   const query = `
     SELECT *
@@ -71,24 +86,6 @@ const getContributionById = (contribution_id) => {
     });
   }
 
-// const approveContribution = (contribution_id) => {
-//   const query = `
-//     UPDATE contributions
-//     SET proposal_status = true
-//     WHERE id = $1
-//   `;
-
-//   const values = [contribution_id];
-//   // TODO: Query the above to update the proposal status as t
-//   return db.query(query, values)
-//     .then(() => {
-//       return getContributionById(contribution_id);
-//     })
-//     .catch(err => {
-//       console.error("Error approving contribution:", err);
-//       throw err;
-//     });
-// }
 
 const approveContribution = (contribution_id) => {
   const query = `
@@ -148,6 +145,7 @@ const upvoteContribution = (contribution_id) => {
 module.exports = {
   getContributionsById,
   addContribution,
+  deleteContribution,
   approveContribution,
   appendContributionToStory,
   getContributionById,

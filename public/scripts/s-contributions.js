@@ -80,9 +80,7 @@ $(document).ready(function () {
         if (response.success) {
           // Clear the form field.
           $(".contribution-input-text").val('');
-
-          alert("Your contribution has been proposed successfully!");
-
+          // alert("Your contribution has been proposed successfully!");
           // Add contribution to the contributions list.
           const newContributionHTML = genContributionView(response.contribution);
           const $newContribution = $(newContributionHTML); // Convert the string to a jQuery object
@@ -113,7 +111,7 @@ $(document).ready(function () {
     })
     .done((response) => {
         if(response.success) {
-            alert("Contribution has been approved!");
+            // alert("Contribution has been approved!");
             // Grab the story proposal and user ID from the response.
             const approvedStoryText = response.contribution.story_proposal;
             const userId = response.contribution.user_id;
@@ -136,13 +134,27 @@ $(document).ready(function () {
   // Event listener when admin accepts the contribution proposal.
   $("body").on("click", ".reject-contribution", function() {
     const $contributionElem = $(this).closest(".contribution");
+    const contributionId = $contributionElem.data("id");
 
-    // Add any logic here if you want to perform an action on the backend upon rejection.
-    // For instance, you might want to update the database to flag this contribution as "rejected".
-    // If you do, you'd use an AJAX request similar to the approveContribution function.
-
-    // For now, simply remove the contribution from the DOM:
-    $contributionElem.remove();
+    $.ajax({
+        method: "POST",
+        url: "/contributions/reject",
+        data: {
+            contribution_id: contributionId
+        }
+    })
+    .done((response) => {
+        if(response.success) {
+            // alert("Contribution has been rejected!");
+            // Remove the contribution from the DOM.
+            $contributionElem.remove();
+        } else {
+            alert(response.message);
+        }
+    })
+    .fail((error) => {
+        alert("There was an error rejecting the contribution. Please try again.");
+    });
   });
 
   // Event listener for upvoting a contribution.

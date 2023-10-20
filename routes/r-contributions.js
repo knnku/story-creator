@@ -3,7 +3,9 @@ const {
   getContributionsById,
   addContribution,
   upvoteContribution,
-  approveContribution
+  approveContribution,
+  getContributionById,
+  deleteContribution
 } = require('../db/queries/q-contributions');
 
 const router = express.Router();
@@ -60,6 +62,24 @@ router.post('/add', (req, res) => {
     });
 });
 
+// Endpoint to reject the proposed contributions to an existing story.
+router.post('/reject', (req, res) => {
+  const { contribution_id } = req.body;
+
+  deleteContribution(contribution_id)
+    .then(() => {
+      res.json({
+        success: true,
+        message: 'Contribution rejected!'
+      });
+    })
+    .catch(err => {
+      console.error("Error rejecting contribution:", err);
+      res.status(500).json({ success: false, message: "Internal server error." });
+    });
+});
+
+
 // Endpoint to approve a contribution.
 router.post('/approve', (req, res) => {
   const { contribution_id } = req.body;
@@ -80,7 +100,7 @@ router.post('/approve', (req, res) => {
 });
 
 // Endpoint to upvote a contribution.
-router.post('/contributions/upvote', (req, res) => {
+router.post('/upvote', (req, res) => {
   const { contribution_id } = req.body;
 
   upvoteContribution(contribution_id)
