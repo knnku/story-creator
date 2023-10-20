@@ -55,6 +55,15 @@ const addContribution = (contributionData) => {
     });
 };
 
+const getContributionById = (contribution_id) => {
+  const query = `
+    SELECT *
+    FROM contribution
+    W    `;
+
+  const values = [contribution_id]WHERE id = $1
+}
+
 const approveContribution = (contribution_id) => {
   const query = `
     UPDATE contributions
@@ -64,6 +73,8 @@ const approveContribution = (contribution_id) => {
   `;
 
   const values = [contribution_id];
+
+getContributionById(contribution_id)
 
   return db.query(query, values)
     .then(data => data.rows[0])
@@ -85,4 +96,10 @@ const upvoteContribution = (contribution_id) => {
     .catch(err => console.error("Error upvoting contribution:", err));
 };
 
-module.exports = { getContributionsById, addContribution, upvoteContribution, approveContribution };
+module.exports = {
+  getContributionsById,
+  addContribution,
+  upvoteContribution,
+  approveContribution,
+  getContributionById
+};
