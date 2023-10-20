@@ -30,18 +30,18 @@ $(document).ready(function () {
   };
 
 
-  //KT Event listener for click on story view to get all contributions.
+  //Event listener for click on story view to get all contributions.
   $("body").on("click", "#story-list article[id]", function () {
     // 'this' refers to the clicked div
     var storyId = $(this).attr("id");
 
     $.ajax({
       method: "GET",
-      url: `/contributions/story/${storyId}`, //Point to specific ID
+      url: `/contributions/story/${storyId}`, // Point to specific ID.
     })
       .done((contributionsPkg) => {
-        const contribs = contributionsPkg.contributions; //KT running out of variable names
-        // KT render contribution to view.
+        const contribs = contributionsPkg.contributions;
+        // Render contribution to view.
         contribs.forEach((contribution) => {
           const $contributionElement = genContributionView(contribution);
           console.log($contributionElement);
@@ -59,11 +59,11 @@ $(document).ready(function () {
     // Check if there are any contributions inside the contributions-list container.
     if ($(".contributions-list .contribution").length > 0) {
       alert("Only one contribution proposal can be added at a time. Please wait for the current proposal to be resolved.");
-      return; // Exit the event handler
+      return;
     }
 
-    const contributionInput = $(".contribution-input-text").val(); // KT For some reason it won't work with an id selector
-    const storyId = $(".story-view").attr("id"); //KT Grab id from element tag with class story view
+    const contributionInput = $(".contribution-input-text").val();
+    const storyId = $(".story-view").attr("id");
 
     console.log("tried to add contribution!"); // test
     console.log("s-contributions:", contributionInput, storyId); //test
@@ -131,6 +131,18 @@ $(document).ready(function () {
     .fail((error) => {
         alert("There was an error approving the contribution. Please try again.");
     });
+  });
+
+  // Event listener when admin accepts the contribution proposal.
+  $("body").on("click", ".reject-contribution", function() {
+    const $contributionElem = $(this).closest(".contribution");
+
+    // Add any logic here if you want to perform an action on the backend upon rejection.
+    // For instance, you might want to update the database to flag this contribution as "rejected".
+    // If you do, you'd use an AJAX request similar to the approveContribution function.
+
+    // For now, simply remove the contribution from the DOM:
+    $contributionElem.remove();
   });
 
   // Event listener for upvoting a contribution.
