@@ -1,28 +1,73 @@
 @import 'variables';
 
-#story-view {
+// KT General styles for story view hero'
+#story-view-container {
   padding: 15px 0px;
-  overflow-y: hidden;
+  overflow-y: auto;
+  max-height: 95vh;
   background: $bright-bg;
-}
-
-#story-view {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   color: $hero-color;
-  padding-left: 3em;
+  padding: 3em 1em;
+  word-break: break-word;
 }
 
-#story-view h1 {
+#story-view-container h1 {
   font-size: 7em;
   margin: 1em 0px;
 }
 
-#story-view h3 {
+#story-view-container h4 {
   font-size: 3em;
 }
 
-.story-view {
-  color: black;
+#story-view-container hr {
+  border-color: $hero-color;
+  border-top: 3px solid;
+  opacity: 100;
 }
+
+//KT Styles for indivual stories
+.story-view {
+  font-family: 'Montserrat', serif;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.story-view-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+.story-title {
+  font-weight: 600;
+}
+
+.story-creator {
+  font-weight: 600;
+}
+
+.story-paragraph {
+ margin-bottom: 3rem;
+ font-size: 1.2em;
+ font-weight: 400;
+}
+
+.story-view-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.9em;
+}
+
+.story-view-footer div {
+  font-weight: 600;
+}
+

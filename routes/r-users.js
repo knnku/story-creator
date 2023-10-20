@@ -16,20 +16,19 @@ router.get("/", (req, res) => {
 router.post("/login", (req, res) => {
   console.log('r-users input: ', req.body.username); //test
   const userName = req.body.username;
-  // const user = getUser(userName); ---test, value not needed
 
-  console.log('r-cookie:',req.cookies); //read cookie in browser test
+  console.log('r-cookie:', req.cookies); //read cookie in browser test
 
   res.clearCookie("username"); // Clear existing cookie
 
   getUser(userName)
     .then(user => {
-      // console.log("Promise from database:", user); //test
       if (userName === "admin") {
         res.cookie('username', 'admin')
         res.json({
           success: true,
           message: "Login successful, admin!",
+          userType: "admin",  // Send back user type
           data: user
         });
       } else if (userName === "guest") {
@@ -37,6 +36,7 @@ router.post("/login", (req, res) => {
         res.json({
           success: true,
           message: "Login successful, guest!",
+          userType: "guest",  // Send back user type
           data: user
         });
       } else {
@@ -47,11 +47,14 @@ router.post("/login", (req, res) => {
       }
     })
     .catch(err => {
-      console.log("Error fetching user:", error);
-      // res.json();
+      console.log("Error fetching user:", err);
+      // Ideally, send back an error response to the client
+      res.status(500).json({
+        success: false,
+        message: "Server error while fetching user."
+      });
     });
 
 });
 
 module.exports = router;
-

@@ -1,98 +1,105 @@
+
+
 $(document).ready(function () {
 
-  // IMPORTANT: Renders stories.
-  const createStoryElement = (story) => {
-    const {
+  // Submitted contribution proposal appears below contribution proposal form.
+  const genContributionView = (contribution) => {
+    let {
+      story_proposal,
+      story_id,
       id,
       user_id,
-      main_story,
-      title,
-      story_status,
+      votes,
       date_created,
-      date_completed,
-    } = story;
+      proposal_status,
+    } = contribution;
 
-    let contributeButton = '';
+    const $contributionView = `
+    <div class="contribution" data-id="${id}">
+      <p>${story_proposal}</p>
+      <small>Proposed on: ${date_created} | Proposal Status: ${proposal_status} | Votes: ${votes}</small>
+      <button class="upvote-btn">Upvote</button><br>
+      <span class="admin-contribute-buttons" style="display: ${userWho[1] === "admin" ? "inline" : "none"}">
+        <button id="accept-contribution">Accept</button>
+        <button id="reject-contribution">Reject</button>
+      </span>
+    </div>`;
 
-    // If story_status is false (meaning incomplete)
-    if (!story_status) {
-        contributeButton = `
-        <button class="contribute-to-story" data-story-id="${id}">Contribute</button>
+    return $contributionView;
 
-        <!-- Contribution form within the story -->
-        <form class="contribution-form" style="display:none;">
-            <textarea class="contribution-text" placeholder="Add your part to this story."></textarea>
-            <input type="submit" value="Submit">
-            <button type="button" class="cancel-contribution">Cancel</button>
-        </form>
-        `;
-    }
-
-    const $storyBuild = `
-    <article>
-      <header>
-        <h3>Created by user: #${user_id}</h2>
-        <h3>${title}</h2>
-      </header>
-      <p>${main_story}</p>
-      <footer>
-        <div>Story completion: ${story_status}</div>
-        <div>Date created: ${date_created}</div>
-        <div>Date completed: ${date_completed}</div>
-        ${contributeButton}
-      </footer>
-    </article>
-    `;
-
-    return $storyBuild;
   };
 
-  // Fetch and display stories from the database to append contribution buttons.
-  $.ajax({
-    method: "GET",
-    url: "/stories",
-  })
-    .done((stories) => {
-      stories.forEach((story) => {
-        const $storyElement = createStoryElement(story);
-        $(".story-list").append($storyElement);
-      });
-    })
-    .catch((err) => {
-      console.log("Error fetching stories for contributions:", err);
-    });
-
-  // Event handler for showing the contribution modal
-  $(".story-list").on("click", ".contribute-to-story", function() {
-    // Toggle the form's visibility.
-    $(this).siblings('.contribution-form').toggle();
+  // Event listener to hide the form when 'Cancel' is clicked.
+  $(document).on("click", "#cancel-contribution", () => {
+    $(".new-contributions-container").hide();
   });
 
-  // Event handler for cancelling contribution.
-  $(".story-list").on("click", ".cancel-contribution", function() {
-    // Hide the form.
-    $(this).closest('.contribution-form').hide();
-  });
+  //KT Event listener for click on storyview to get all contributions
+  $("body").on("click", "#story-list article[id]", function () {
+    // 'this' refers to the clicked div
+    var storyId = $(this).attr("id");
 
-  // Event handler for submitting a contribution.
-  $(".story-list").on("submit", ".contribution-form", function(event) {
-    event.preventDefault();
-
-    const storyId = $(this).siblings(".contribute-to-story").data("story-id");
-    const contributionText = $(this).find(".contribution-text").val();
-
-    // Make an AJAX POST request to send the contribution to the server.
     $.ajax({
-        method: "POST",
-        url: `/stories/${storyId}/contribute`,
-        data: { contribution: contributionText }
+      method: "GET",
+      url: `/contributions/story/${storyId}`, //Point to specific ID
     })
-    .done(response => {
-        alert(response.message);
-        $(this).hide();
-    })
-    .catch(err => {
-        console.log("Error contributing to the story:", err);
-    });
+      .done((contributionsPkg) => {
+        const contribs = contributionsPkg.contributions; //KT running out of variable names
+        // KT render contribution to view
+        contribs.forEach((contribution) => {
+          const $contributionElement = genContributionView(contribution);
+          console.log($contributionElement);
+          $(".contributions-list").prepend($contributionElement)
+        });
+      })
+      .catch((err) => {
+        console.log("Error fetching story:", err);
+      });
   });
+
+  $("#story-view-container").on("click", "#submit-contribution", () => {
+
+    // Check if there are any contributions inside the contributions-list container.
+    if ($(".contributions-list .contribution").length > 0) {
+      alert("Only one contribution proposal can be added at a time. Please wait for the current proposal to be resolved.");
+      return; // Exit the event handler
+    }
+
+    const contributionInput = $(".contribution-input-text").val(); // KT For some reason it won't work with an id selector
+    const storyId = $(".story-view").attr("id"); //KT Grab id from element tag with class story view
+
+    console.log("tried to add contribution!"); // test
+    console.log("s-contributions:", contributionInput, storyId); //test
+
+    $.ajax({
+      method: "POST",
+      url: "/contributions/add",
+      data: {
+        story_id: storyId,
+        story_proposal: contributionInput,
+      },
+    })
+      .done((response) => {
+        if (response.success) {
+          // Clear the form field.
+          $(".contribution-input-text").val('');
+
+          alert("Your contribution has been proposed successfully!");
+
+          // Add contribution to the contributions list.
+          const newContributionHTML = genContributionView(response.contribution);
+          const $newContribution = $(newContributionHTML); // Convert the string to a jQuery object
+          $(".contributions-list").prepend($newContribution); // Add the new contribution at the beginning of the list.
+          $newContribution.hide().fadeIn(1000);
+        } else {
+          alert(response.message);
+        }
+      })
+      .fail((error) => {
+        alert(
+          "There was an error submitting your contribution. Please try again."
+        );
+      });
+  });
+
 });

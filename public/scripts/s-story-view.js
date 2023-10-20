@@ -1,9 +1,7 @@
-
-
 $(document).ready(() => {
 
   const genStoryView = (story) => {
-     const {
+     let {
        id,
        user_id,
        main_story,
@@ -13,23 +11,48 @@ $(document).ready(() => {
        date_completed,
      } = story;
 
-     const $storyView= `
+     if (story_status) {
+      story_status = "Complete"
+     }
+
+     if (!story_status) {
+      story_status = "Incomplete"
+     }
+
+     if (!date_completed) {
+      date_completed = "N/A"
+     }
+
+     const $storyView = `
       <article class="story-view container-sm" id="${id}">
 
-      <header class="story-view-header">
-        <h4 class="story-title">${title}</h4>
-        <i class="story-creator">Created By: #${user_id}</i>
-      </header>
+        <header class="story-view-header">
+          <h4 class="story-title">"${title}"</h4>
+          <i class="story-creator">Creator: user#${user_id}</i>
+        </header>
+        <hr class="hr" />
+        <p class="story-paragraph">${main_story}</p>
 
-      <p>${main_story}</p>
+        <footer class="story-view-footer">
+          <div>Complete: ${story_status}</div>
+          <div>Date Created: ${date_created}</div>
+          <div>Date Completed: ${date_completed}</div>
+        </footer>
 
-      <footer>
-        <div>Open: ${story_status}</div>
-        <div>Date Created: ${date_created}</div>
-        <div>Date Completed: ${date_completed}</div>
-      </footer>
+      </article>
+        <hr>
+      <div class="new-contributions-container container-sm">
+        <form class="add-contribution">
+          <label for="contribution-add" class="form-label">Contribute:</label>
+          <textarea class="form-control contribution-input-text" rows="3"></textarea>
+        </form>
+        <button id="submit-contribution">Submit Contribution</button>
+        <button id="cancel-contribution">Cancel</button>
+      </div>
+      <hr>
+      <div class="contributions-list container"></div>
 
-    </article>`;
+      `;
 
      return $storyView;
   };
@@ -44,15 +67,13 @@ $(document).ready(() => {
       url: `/stories/${storyId}`, //Point to specific ID
     })
       .done((story) => {
-         $("#story-view").empty();
+         $("#story-view-container").empty();
          const $story = genStoryView(story);
-         $("#story-view").append($story);
+         $("#story-view-container").append($story);
       })
       .catch((err) => {
         console.log("Error fetching story:", err);
       });
   });
-
-
 
 });

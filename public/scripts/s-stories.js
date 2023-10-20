@@ -31,12 +31,6 @@ const createStoryElement = story => {
 };
 
 $(document).ready(function () {
-  const usrCookie = document.cookie; // Brute force cookie params to get admin.
-  const queryToUser = usrCookie.split("=");
-
-  if (queryToUser[1] !== "admin") {
-    $("#add-story").hide(); //hide add story button in pageLoad
-  }
 
   $.ajax({
     method: "GET",
@@ -52,41 +46,5 @@ $(document).ready(function () {
   .catch((err) => {
     console.log("Error fetching stories:", err);
   });
-
-  // Event handler for login with type of user.
-  $("#login").on("click", (event) => {
-    event.preventDefault();
-    const $userInput = $("#login-form").serialize();
-
-    console.log("Login button clicked!");
-
-    $.ajax({
-      method: "POST",
-      url: "users/login",
-      data: $userInput,
-    })
-    .done((response) => {
-      const userType = response.data[0].username; // Store user type admin/guest
-
-      // After login success, check for user type.
-      if (response.success) {
-        // If user is 'admin', show button.
-        if (userType === "admin") {
-          $("#add-story").show();
-        } else {
-          // If user is not 'admin', hide button.
-          $("#add-story").hide();
-        }
-      } else {
-        console.log(response.message || "Error logging in.");
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  });
-
-  // We have moved the addition logic to the s-add-story.js file,
-  // so no other change is necessary in this file.
 
 });

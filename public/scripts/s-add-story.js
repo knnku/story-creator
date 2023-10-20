@@ -16,11 +16,11 @@ $(document).ready(() => {
 
   // Event listener for the 'add-story' button.
   $('#add-story').on('click', () => {
-    $("#story-view").empty();
+    $("#story-view-container").empty();
 
     // If the form doesn't already exist in the DOM, append it. Otherwise, just show it.
     if (!$(".story-creation-form").length) {
-        $("#story-view").append($newStoryForm());
+        $("#story-view-container").append($newStoryForm());
     }
     $(".story-creation-form").show();
   });
@@ -34,18 +34,19 @@ $(document).ready(() => {
   $(document).on("click", "#submit-story", function() {
     const storyText = $("#new-story-text").val();
     const storyTitle = $("#new-story-title").val();
-    const currentUser = document.cookie.split('=');
+
+    let userWho = document.cookie.split("="); //KT Grab cookie info and dfine if admin or not
     let user_id = null;
 
     console.log("submit story button clicked!");
 
-    console.log(currentUser[1]); //current user
+    console.log(userWho[1]); //current user
 
-    if (currentUser[1] === "admin") {
+    if (userWho[1] === "admin") {
       user_id = 1;
     }
 
-    if (currentUser[1] === "guest") {
+    if (userWho[1] === "guest") {
       user_id = 2;
     }
 
@@ -69,7 +70,7 @@ $(document).ready(() => {
 
           alert("Your story has been posted successfully!");
 
-          // Assuming you have a function createStoryElement in this file or it's globally available:
+          // Add story to side column.
           const newStoryHTML = createStoryElement(response.story);
           const $newStory = $(newStoryHTML); // Convert the string to a jQuery object
           $("#story-list").prepend($newStory); // Add the new story at the beginning of the list.
