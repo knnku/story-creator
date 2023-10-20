@@ -29,12 +29,8 @@ $(document).ready(function () {
 
   };
 
-  // Event listener to hide the form when 'Cancel' is clicked.
-  $(document).on("click", "#cancel-contribution", () => {
-    $(".new-contributions-container").hide();
-  });
 
-  //KT Event listener for click on storyview to get all contributions
+  //KT Event listener for click on story view to get all contributions.
   $("body").on("click", "#story-list article[id]", function () {
     // 'this' refers to the clicked div
     var storyId = $(this).attr("id");
@@ -45,7 +41,7 @@ $(document).ready(function () {
     })
       .done((contributionsPkg) => {
         const contribs = contributionsPkg.contributions; //KT running out of variable names
-        // KT render contribution to view
+        // KT render contribution to view.
         contribs.forEach((contribution) => {
           const $contributionElement = genContributionView(contribution);
           console.log($contributionElement);
@@ -56,9 +52,6 @@ $(document).ready(function () {
         console.log("Error fetching story:", err);
       });
   });
-
-  //Event listener for voting
-  // $('#')
 
   // Event listener when contribution proposal is submitted.
   $("#story-view-container").on("click", "#submit-contribution", () => {
@@ -129,6 +122,8 @@ $(document).ready(function () {
             const currentText = $mainStory.text();
             const newText = `${currentText}\n\n${approvedStoryText}\n\n`; // Stretch: identify contributor.
             $mainStory.text(newText);
+            // Remove the contribution element from the DOM
+            $contributionElem.remove();
         } else {
             alert(response.message);
         }
@@ -138,7 +133,7 @@ $(document).ready(function () {
     });
   });
 
-  // Event listener for upvoting a contribution
+  // Event listener for upvoting a contribution.
   $("body").on("click", ".upvote-btn", function() {
     const $contributionElem = $(this).closest(".contribution");
     const contributionId = $contributionElem.data("id");
