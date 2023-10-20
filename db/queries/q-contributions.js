@@ -55,21 +55,6 @@ const addContribution = (contributionData) => {
     });
 };
 
-const upvoteContribution = (contribution_id) => {
-  const query = `
-    UPDATE contributions
-    SET votes = votes + 1
-    WHERE id = $1
-    RETURNING *;
-  `;
-
-  const values = [contribution_id];
-
-  return db.query(query, values)
-    .then(data => data.rows[0])
-    .catch(err => console.error("Error upvoting contribution:", err));
-};
-
 const approveContribution = (contribution_id) => {
   const query = `
     UPDATE contributions
@@ -83,6 +68,21 @@ const approveContribution = (contribution_id) => {
   return db.query(query, values)
     .then(data => data.rows[0])
     .catch(err => console.error("Error approving contribution:", err));
+};
+
+const upvoteContribution = (contribution_id) => {
+  const query = `
+    UPDATE contributions
+    SET votes = votes + 1
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  const values = [contribution_id];
+
+  return db.query(query, values)
+    .then(data => data.rows[0])
+    .catch(err => console.error("Error upvoting contribution:", err));
 };
 
 module.exports = { getContributionsById, addContribution, upvoteContribution, approveContribution };
