@@ -1,59 +1,88 @@
-/**
- * Assumptions for team at this point:
- * 1. Each story has a unique ID.
- * 2. When contributions are added, they're appended to the end of the main_story with two newline breaks.
- * 3. The `story_id` in `insertStory` is assumed to be unique and either generated externally or input manually.
- * 4. Contributions are simple text additions to the main story without tracking individual contributors.
- */
-
 const db = require('../connection');
 
-const getStories = () => {
-  const query = 'SELECT * FROM stories';
-  return db.query(query)
-    .then(data => {
-      return data.rows;
-    });
-};
+const getContributionsById = (storyData) => {
+  const story_id = storyData;
 
-
-const addContributionToStory = (storyId, contribution) => {
   const query = `
-    UPDATE stories
-    SET main_story = CONCAT(main_story, '\n\n', $2)
-    WHERE id = $1
+  SELECT *
+  FROM contributions
+  WHERE story_id = $1
   `;
 
-  const values = [storyId, contribution];
+  values = [story_id];
 
   return db.query(query, values)
-    .then(data => {
+    .then((data) => {
+      // console.log("q-contributions", data.rows); //test
       return data.rows;
+    })
+    .catch(err => {
+      console.error("Error getting contributions:", err);
+      throw err; // Propagate the error so it can be handled by the caller.
     });
-};
+}
 
-const insertStory = (storyValues) => {
+const addContribution = (contributionData) => {
   const query = `
-    INSERT INTO stories (
+    INSERT INTO contributions (
       story_id,
+      user_id,
       votes,
       story_proposal,
       date_created,
       proposal_status
-    ) VALUES ($1, $2, $3, $4, $5)`;
+    ) VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *;
+  `;
 
-    const values = [
-    storyValues.story_id,
-    storyValues.votes,
-    storyValues.story_proposal,
-    storyValues.date_created,
-    storyValues.proposal_status
+  const values = [
+    contributionData.story_id, // ID of the story the contribution belongs to
+    contributionData.user_id || null, // ID of the user (can be null for anonymous)
+    0, // Initial votes always start at 0
+    contributionData.story_proposal, // The proposed contribution text
+    new Date(), // Current date and time
+    false // Initial proposal status is always false (not yet approved)
   ];
 
   return db.query(query, values)
-    .then(data => {
-      return data.rows;
+    .then((response) => {
+      console.log("q-contributions:", response.rows);
+      return response.rows[0]; // WL - fixed the loading issue.
+    }) // Return the newly added contribution
+    .catch(err => {
+      console.error("Error adding contribution:", err);
+      throw err; // Propagate the error so it can be handled by the caller
     });
 };
 
-module.exports = { getStories, getStoryById, addContributionToStory, insertStory };
+const upvoteContribution = (contribution_id) => {
+  const query = `
+    UPDATE contributions
+    SET votes = votes + 1
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  const values = [contribution_id];
+
+  return db.query(query, values)
+    .then(data => data.rows[0])
+    .catch(err => console.error("Error upvoting contribution:", err));
+};
+
+const approveContribution = (contribution_id) => {
+  const query = `
+    UPDATE contributions
+    SET proposal_status = true
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  const values = [contribution_id];
+
+  return db.query(query, values)
+    .then(data => data.rows[0])
+    .catch(err => console.error("Error approving contribution:", err));
+};
+
+module.exports = { getContributionsById, addContribution, upvoteContribution, approveContribution };

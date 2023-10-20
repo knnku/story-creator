@@ -43,16 +43,14 @@ $(document).ready(() => {
         <hr>
       <div class="new-contributions-container container-sm">
         <form class="add-contribution">
-          <label for="exampleFormControlTextarea1" class="form-label">Contribute:</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea
+          <label for="contribution-add" class="form-label">Contribute:</label>
+          <textarea class="form-control contribution-input-text" rows="3"></textarea>
         </form>
         <button id="submit-contribution">Submit Contribution</button>
-        <button id="cancel-story">Cancel</button>
+        <button id="cancel-contribution">Cancel</button>
       </div>
       <hr>
-      <div class="contributions-list container">
-      Contributions will live here. Upvote and downvote
-      </div>
+      <div class="contributions-list container"></div>
 
       `;
 

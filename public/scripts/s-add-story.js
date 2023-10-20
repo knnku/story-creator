@@ -70,7 +70,7 @@ $(document).ready(() => {
 
           alert("Your story has been posted successfully!");
 
-          // Assuming you have a function createStoryElement in this file or it's globally available:
+          // Add story to side column.
           const newStoryHTML = createStoryElement(response.story);
           const $newStory = $(newStoryHTML); // Convert the string to a jQuery object
           $("#story-list").prepend($newStory); // Add the new story at the beginning of the list.

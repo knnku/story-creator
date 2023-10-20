@@ -1,7 +1,6 @@
 const usrCookie = document.cookie;
 const userWho = usrCookie.split("="); // Brute force cookie params to get admin.
 
-
 $(document).ready(function () {
 
   // If a user is already logged in, display a welcome message and handle "admin" functionalities.
