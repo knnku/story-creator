@@ -3,7 +3,7 @@
 $(document).ready(function () {
 
   // Submitted contribution proposal appears below contribution proposal form.
-  const genContributionView = (contribution, isAdmin) => {
+  const genContributionView = (contribution) => {
     let {
       story_proposal,
       story_id,
@@ -14,16 +14,16 @@ $(document).ready(function () {
       proposal_status,
     } = contribution;
 
-      const $contributionView = `
-      <div class="contribution" data-id="${id}">
-        <p>${story_proposal}</p>
-        <small>Proposed on: ${date_created} | Proposal Status: ${proposal_status} | Votes: ${votes}</small>
-        <button class="upvote-btn">Upvote</button><br>
-        <span>
-          <button class="reject-contribution" style="display: none;">Accept</button>
-          <button class="reject-contribution" style="display: none;">Reject</button>
-        </span>
-      </div>`;
+    const $contributionView = `
+    <div class="contribution" data-id="${id}">
+      <p>${story_proposal}</p>
+      <small>Proposed on: ${date_created} | Proposal Status: ${proposal_status} | Votes: ${votes}</small>
+      <button class="upvote-btn">Upvote</button><br>
+      <span class="admin-contribute-buttons" style="display: ${userWho[1] === "admin" ? "inline" : "none"}">
+        <button id="accept-contribution">Accept</button>
+        <button id="reject-contribution">Reject</button>
+      </span>
+    </div>`;
 
     return $contributionView;
 
@@ -58,6 +58,7 @@ $(document).ready(function () {
   });
 
   $("#story-view-container").on("click", "#submit-contribution", () => {
+
     // Check if there are any contributions inside the contributions-list container.
     if ($(".contributions-list .contribution").length > 0) {
       alert("Only one contribution proposal can be added at a time. Please wait for the current proposal to be resolved.");
