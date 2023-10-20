@@ -125,7 +125,6 @@ $(document).ready(function () {
             const approvedStoryText = response.contribution.story_proposal;
             const userId = response.contribution.user_id;
 
-            // TODO: Optionally, update the DOM to reflect the approval, or remove the approve/reject buttons.
             // Here, append the approved contribution text to the main story.
             const $mainStory = $(".story-paragraph");
             const currentText = $mainStory.text();
