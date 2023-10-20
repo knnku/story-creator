@@ -20,8 +20,8 @@ $(document).ready(function () {
       <small>Proposed on: ${date_created} | Proposal Status: ${proposal_status} | Votes: ${votes}</small>
       <button class="upvote-btn">Upvote</button><br>
       <span class="admin-contribute-buttons" style="display: ${userWho[1] === "admin" ? "inline" : "none"}">
-        <button id="accept-contribution">Accept</button>
-        <button id="reject-contribution">Reject</button>
+        <button class="accept-contribution">Accept</button>
+        <button class="reject-contribution">Reject</button>
       </span>
     </div>`;
 
@@ -57,6 +57,7 @@ $(document).ready(function () {
       });
   });
 
+  // Event listener when contribution proposal is submitted.
   $("#story-view-container").on("click", "#submit-contribution", () => {
 
     // Check if there are any contributions inside the contributions-list container.
@@ -101,5 +102,31 @@ $(document).ready(function () {
         );
       });
   });
+
+  // Event listener when admin accepts the contribution proposal.
+  $("body").on("click", ".accept-contribution", function() {
+    const $contributionElem = $(this).closest(".contribution");
+    const contributionId = $contributionElem.data("id");
+
+    $.ajax({
+        method: "POST",
+        url: "/contributions/approve",
+        data: {
+            contribution_id: contributionId
+        }
+    })
+    .done((response) => {
+        if(response.success) {
+            alert("Contribution has been approved!");
+            // TODO: Optionally, update the DOM to reflect the approval, or remove the approve/reject buttons.
+        } else {
+            alert(response.message);
+        }
+    })
+    .fail((error) => {
+        alert("There was an error approving the contribution. Please try again.");
+    });
+  });
+
 
 });
