@@ -57,6 +57,9 @@ $(document).ready(function () {
       });
   });
 
+  //Event listener for voting
+  // $('#')
+
   // Event listener when contribution proposal is submitted.
   $("#story-view-container").on("click", "#submit-contribution", () => {
 
@@ -118,7 +121,16 @@ $(document).ready(function () {
     .done((response) => {
         if(response.success) {
             alert("Contribution has been approved!");
+            // Grab the story proposal and user ID from the response.
+            const approvedStoryText = response.contribution.story_proposal;
+            const userId = response.contribution.user_id;
+
             // TODO: Optionally, update the DOM to reflect the approval, or remove the approve/reject buttons.
+            // Here, append the approved contribution text to the main story.
+            const $mainStory = $(".story-paragraph");
+            const currentText = $mainStory.text();
+            const newText = `${currentText}\n\n${approvedStoryText}\n\nContributed by User ID: ${userId}`;
+            $mainStory.text(newText);
         } else {
             alert(response.message);
         }
