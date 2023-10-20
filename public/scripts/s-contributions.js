@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
 
   // Submitted contribution proposal appears below contribution proposal form.
@@ -12,16 +14,15 @@ $(document).ready(function () {
       proposal_status,
     } = contribution;
 
-    const adminButtons = isAdmin ? `
-    <button class="approve-btn">Approve</button>
-    <button class="reject-btn">Reject</button>
-    ` : '';
-
-    const $contributionView = `
+      const $contributionView = `
       <div class="contribution" data-id="${id}">
         <p>${story_proposal}</p>
         <small>Proposed on: ${date_created} | Proposal Status: ${proposal_status} | Votes: ${votes}</small>
-        <button class="upvote-btn">Upvote</button>
+        <button class="upvote-btn">Upvote</button><br>
+        <span>
+          <button class="reject-contribution" style="display: none;">Accept</button>
+          <button class="reject-contribution" style="display: none;">Reject</button>
+        </span>
       </div>`;
 
     return $contributionView;
