@@ -56,17 +56,21 @@ $(document).ready(function () {
   // Event listener when contribution proposal is submitted.
   $("#story-view-container").on("click", "#submit-contribution", () => {
 
+    // Trim whitespace.
+    const contributionInput = $(".contribution-input-text").val().trim();
+    const storyId = $(".story-view").attr("id");
+
+    // Check for empty input.
+    if (!contributionInput) {
+        alert("Please enter a contribution before submitting.");
+        return;
+    }
+
     // Check if there are any contributions inside the contributions-list container.
     if ($(".contributions-list .contribution").length > 0) {
       alert("Only one contribution proposal can be added at a time. Please wait for the current proposal to be resolved.");
       return;
     }
-
-    const contributionInput = $(".contribution-input-text").val();
-    const storyId = $(".story-view").attr("id");
-
-    console.log("tried to add contribution!"); // test
-    console.log("s-contributions:", contributionInput, storyId); //test
 
     $.ajax({
       method: "POST",
