@@ -13,7 +13,6 @@ $(document).ready(function () {
     // Show add story button for admins.
     if (userWho[1] === "admin") {
       $("#add-story").show();
-      $('.mark-complete').show();
     }
   }
 
