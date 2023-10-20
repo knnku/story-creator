@@ -66,6 +66,7 @@ router.post('/approve', (req, res) => {
 
   approveContribution(contribution_id)
     .then(response => {
+      console.log(response);
       res.json({
         success: true,
         message: 'Contribution approved!',

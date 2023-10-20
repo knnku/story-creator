@@ -9,7 +9,7 @@ const getContributionsById = (storyData) => {
   WHERE story_id = $1
   `;
 
-  values = [story_id];
+  const values = [story_id];
 
   return db.query(query, values)
     .then((data) => {
@@ -58,28 +58,37 @@ const addContribution = (contributionData) => {
 const getContributionById = (contribution_id) => {
   const query = `
     SELECT *
-    FROM contribution
-    W    `;
+    FROM contributions
+    WHERE id = $1
+    `;
 
-  const values = [contribution_id]WHERE id = $1
-}
+  const values = [contribution_id];
+    return db.query(query, values)
+      .then(data => data.rows[0])
+      .catch(err => {
+        console.error("Error getting contribution by ID:", err);
+        throw err;
+    });
+  }
 
 const approveContribution = (contribution_id) => {
   const query = `
     UPDATE contributions
     SET proposal_status = true
     WHERE id = $1
-    RETURNING *;
   `;
 
   const values = [contribution_id];
-
-getContributionById(contribution_id)
-
+  // TODO: Query the above to update the proposal status as t
   return db.query(query, values)
-    .then(data => data.rows[0])
-    .catch(err => console.error("Error approving contribution:", err));
-};
+    .then(() => {
+      return getContributionById(contribution_id);
+    })
+    .catch(err => {
+      console.error("Error approving contribution:", err);
+      throw err;
+    });
+}
 
 const upvoteContribution = (contribution_id) => {
   const query = `
