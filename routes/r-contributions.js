@@ -60,6 +60,24 @@ router.post('/add', (req, res) => {
     });
 });
 
+// Endpoint to approve a contribution.
+router.post('/approve', (req, res) => {
+  const { contribution_id } = req.body;
+
+  approveContribution(contribution_id)
+    .then(response => {
+      res.json({
+        success: true,
+        message: 'Contribution approved!',
+        contribution: response
+      });
+    })
+    .catch(err => {
+      console.error("Error approving contribution:", err);
+      res.status(500).json({ success: false, message: "Internal server error." });
+    });
+});
+
 // // Endpoint to upvote a contribution.
 // router.post('/contributions/upvote', (req, res) => {
 //   const { contribution_id } = req.body;
@@ -74,24 +92,6 @@ router.post('/add', (req, res) => {
 //     })
 //     .catch(err => {
 //       console.error("Error upvoting contribution:", err);
-//       res.status(500).json({ success: false, message: "Internal server error." });
-//     });
-// });
-
-// // Endpoint to approve a contribution.
-// router.post('/contributions/approve', (req, res) => {
-//   const { contribution_id } = req.body;
-
-//   approveContribution(contribution_id)
-//     .then(response => {
-//       res.json({
-//         success: true,
-//         message: 'Contribution approved!',
-//         contribution: response
-//       });
-//     })
-//     .catch(err => {
-//       console.error("Error approving contribution:", err);
 //       res.status(500).json({ success: false, message: "Internal server error." });
 //     });
 // });
