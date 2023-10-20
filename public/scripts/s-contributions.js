@@ -138,5 +138,34 @@ $(document).ready(function () {
     });
   });
 
+  // Event listener for upvoting a contribution
+  $("body").on("click", ".upvote-btn", function() {
+    const $contributionElem = $(this).closest(".contribution");
+    const contributionId = $contributionElem.data("id");
+
+    $.ajax({
+        method: "POST",
+        url: "/contributions/upvote",
+        data: {
+            contribution_id: contributionId
+        }
+    })
+    .done((response) => {
+        if(response.success) {
+            // alert("Contribution upvoted!");
+            // Update the votes in the UI
+            const updatedVotes = response.contribution.votes;
+            $contributionElem.find("small").text(function(_, oldText) {
+                return oldText.replace(/Votes: \d+/, `Votes: ${updatedVotes}`);
+            });
+        } else {
+            alert(response.message);
+        }
+    })
+    .fail((error) => {
+        alert("There was an error upvoting the contribution. Please try again.");
+    });
+  });
+
 
 });

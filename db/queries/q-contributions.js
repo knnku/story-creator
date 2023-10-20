@@ -6,7 +6,7 @@ const getContributionsById = (storyData) => {
   const query = `
   SELECT *
   FROM contributions
-  WHERE story_id = $1 AND story_proposal = false
+  WHERE story_id = $1 AND proposal_status = false
   `;
 
   const values = [story_id];
@@ -148,8 +148,8 @@ const upvoteContribution = (contribution_id) => {
 module.exports = {
   getContributionsById,
   addContribution,
-  upvoteContribution,
   approveContribution,
   appendContributionToStory,
-  getContributionById
+  getContributionById,
+  upvoteContribution
 };
