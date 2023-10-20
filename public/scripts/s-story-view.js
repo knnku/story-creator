@@ -32,7 +32,7 @@ $(document).ready(() => {
         </header>
         <hr class="hr" />
         <p class="story-paragraph">${main_story}</p>
-
+        <button id="mark-complete" style="display: ;">Close Story</button>
         <footer class="story-view-footer">
           <div>Complete: ${story_status}</div>
           <div>Date Created: ${date_created}</div>

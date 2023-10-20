@@ -29,7 +29,6 @@ $(document).ready(function () {
 
   };
 
-
   //Event listener for click on story view to get all contributions.
   $("body").on("click", "#story-list article[id]", function () {
     // 'this' refers to the clicked div
@@ -67,10 +66,10 @@ $(document).ready(function () {
     }
 
     // Check if there are any contributions inside the contributions-list container.
-    if ($(".contributions-list .contribution").length > 0) {
-      alert("Only one contribution proposal can be added at a time. Please wait for the current proposal to be resolved.");
-      return;
-    }
+    // if ($(".contributions-list .contribution").length > 0) {
+    //   alert("Only one contribution proposal can be added at a time. Please wait for the current proposal to be resolved.");
+    //   return;
+    // }
 
     $.ajax({
       method: "POST",
@@ -101,6 +100,11 @@ $(document).ready(function () {
       });
   });
 
+  // Event listener to navigate to the starting page when 'Cancel' is clicked.
+  $(document).on("click", "#cancel-contribution", () => {
+    window.location.href = '/'; // Navigate to the starting page.
+  });
+
   // Event listener when admin accepts the contribution proposal.
   $("body").on("click", ".accept-contribution", function() {
     const $contributionElem = $(this).closest(".contribution");
@@ -113,22 +117,50 @@ $(document).ready(function () {
             contribution_id: contributionId
         }
     })
+    // .done((response) => {
+    //     if(response.success) {
+    //         // alert("Contribution has been approved!");
+    //         // Grab the story proposal and user ID from the response.
+    //         const approvedStoryText = response.contribution.story_proposal;
+    //         const userId = response.contribution.user_id;
+    //         // Append the approved contribution text to the main story.
+    //         const $mainStory = $(".story-paragraph");
+    //         const currentText = $mainStory.text();
+    //         const newText = `${currentText}\n\n${approvedStoryText}\n\n`; // Stretch: identify contributor.
+    //         $mainStory.text(newText);
+    //         // Remove the contribution element from the DOM
+    //         $contributionElem.remove();
+    //     } else {
+    //         alert(response.message);
+    //     }
+    // })
     .done((response) => {
-        if(response.success) {
-            // alert("Contribution has been approved!");
-            // Grab the story proposal and user ID from the response.
-            const approvedStoryText = response.contribution.story_proposal;
-            const userId = response.contribution.user_id;
-            // Append the approved contribution text to the main story.
-            const $mainStory = $(".story-paragraph");
-            const currentText = $mainStory.text();
-            const newText = `${currentText}\n\n${approvedStoryText}\n\n`; // Stretch: identify contributor.
-            $mainStory.text(newText);
-            // Remove the contribution element from the DOM
-            $contributionElem.remove();
-        } else {
-            alert(response.message);
-        }
+      if(response.success) {
+          // Grab the story proposal from the response.
+          const approvedStoryText = response.contribution.story_proposal;
+
+          // Get the existing story content.
+          const existingStory = $(".story-paragraph").text();
+
+          // Check if the last character of the existing story is a punctuation mark or not.
+          const lastChar = existingStory[existingStory.length - 1];
+          const punctuations = [".", "!", "?"];
+          const separator = punctuations.includes(lastChar) ? " " : "";
+
+          // Create a new <span> element with the contribution text and set it to hidden.
+          const $newContributionElem = $(`<span style="display: none;">${separator}${approvedStoryText}</span>`);
+
+          // Append the new element to the main story.
+          $(".story-paragraph").append($newContributionElem);
+
+          // Fade in the new element over 1 second.
+          $newContributionElem.fadeIn(1000);
+
+          // Remove the contribution proposal from the view.
+          $contributionElem.remove();
+      } else {
+          alert(response.message);
+      }
     })
     .fail((error) => {
         alert("There was an error approving the contribution. Please try again.");
