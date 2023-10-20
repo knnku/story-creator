@@ -104,7 +104,7 @@ const approveContribution = (contribution_id) => {
     .then(data => {
       const approvedContribution = data.rows[0];
       return appendContributionToStory(approvedContribution.story_proposal, approvedContribution.story_id)
-        .then(() => approvedContribution);  // After appending to story, return the approved contribution
+        .then(() => approvedContribution);  // After appending to story, return the approved contribution.
     })
     .catch(err => {
       console.error("Error approving contribution:", err);

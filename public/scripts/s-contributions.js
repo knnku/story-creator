@@ -124,11 +124,10 @@ $(document).ready(function () {
             // Grab the story proposal and user ID from the response.
             const approvedStoryText = response.contribution.story_proposal;
             const userId = response.contribution.user_id;
-
-            // Here, append the approved contribution text to the main story.
+            // Append the approved contribution text to the main story.
             const $mainStory = $(".story-paragraph");
             const currentText = $mainStory.text();
-            const newText = `${currentText}\n\n${approvedStoryText}\n\nContributed by User ID: ${userId}`;
+            const newText = `${currentText}\n\n${approvedStoryText}\n\n`; // Stretch: identify contributor.
             $mainStory.text(newText);
         } else {
             alert(response.message);
