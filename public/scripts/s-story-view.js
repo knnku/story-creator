@@ -30,13 +30,14 @@ $(document).ready(() => {
           <h4 class="story-title">"${title}"</h4>
           <i class="story-creator">Creator: user#${user_id}</i>
         </header>
-        <hr class="hr" />
+        <hr class="hr"/>
         <p class="story-paragraph">${main_story}</p>
-        <button id="mark-complete" style="display: none;">Close Story</button>
+
         <footer class="story-view-footer">
           <div>Complete: ${story_status}</div>
           <div>Date Created: ${date_created}</div>
           <div>Date Completed: ${date_completed}</div>
+          <button type="button" class="btn btn-primary" id="complete-story">Complete Story</button>
         </footer>
 
       </article>
@@ -77,5 +78,22 @@ $(document).ready(() => {
         console.log("Error fetching story:", err);
       });
   });
+
+  //KT event listenery for completing/closing a story
+  $('#story-view-container').on("click", '#complete-story', function () {
+    var storyId = $(event.target).closest('article').attr('id')
+    console.log(storyId); //Test
+
+    $.ajax({
+      method: "POST",
+      url: `/stories/${storyId}/complete`,
+    })
+      // .done((story) => {
+      //   console.log(story);
+      // })
+      // .catch((err) => {
+      //   console.log("Error completing story:", err);
+      // });
+  })
 
 });
