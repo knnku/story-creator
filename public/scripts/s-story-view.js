@@ -46,8 +46,10 @@ $(document).ready(() => {
           <label for="contribution-add" class="form-label">Contribute:</label>
           <textarea class="form-control contribution-input-text" rows="3"></textarea>
         </form>
-        <button id="submit-contribution">Submit Contribution</button>
-        <button id="cancel-contribution">Cancel</button>
+        <div class="contribution-ctrls">
+          <button type="button" class="btn btn-primary" id="submit-contribution">Submit Contribution</button>
+          <button type="button" class="btn btn-primary" id="cancel-contribution">Cancel</button>
+        </div>
       </div>
       <hr>
       <div class="contributions-list container"></div>
