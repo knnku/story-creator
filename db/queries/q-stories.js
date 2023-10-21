@@ -52,12 +52,21 @@ const completeStory = (storyId) => {
   UPDATE stories
   SET story_status = true
   WHERE id = $1
+  RETURNING *
   `;
 
   const values = [storyId];
 
-  return db.query(query, values).then((data))
-
+  return db
+    .query(query, values)
+    .then((data) => {
+      // console.log("q-stories", data.rows);
+      return data.rows
+    })
+    .catch((err) => {
+      console.error("Error completing story:", err);
+      throw err;
+    });
 };
 
-module.exports = { getStories, insertStory, getStoryById };
+module.exports = { getStories, insertStory, getStoryById, completeStory };

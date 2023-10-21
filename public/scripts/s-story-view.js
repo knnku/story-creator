@@ -34,7 +34,7 @@ $(document).ready(() => {
         <p class="story-paragraph">${main_story}</p>
 
         <footer class="story-view-footer">
-          <div>Complete: ${story_status}</div>
+          <div>Story Status: ${story_status}</div>
           <div>Date Created: ${date_created}</div>
           <div>Date Completed: ${date_completed}</div>
           <button type="button" class="btn btn-primary" id="complete-story">Complete Story</button>
@@ -42,7 +42,7 @@ $(document).ready(() => {
 
       </article>
         <hr>
-      <div class="new-contributions-container container-sm">
+      <div class="new-contributions-container container-sm" style="display: ${story_status === "Complete" ? "none" : "inline"}">
         <form class="add-contribution">
           <label for="contribution-add" class="form-label">Contribute:</label>
           <textarea class="form-control contribution-input-text" rows="3"></textarea>
@@ -88,12 +88,12 @@ $(document).ready(() => {
       method: "POST",
       url: `/stories/${storyId}/complete`,
     })
-      // .done((story) => {
-      //   console.log(story);
-      // })
-      // .catch((err) => {
-      //   console.log("Error completing story:", err);
-      // });
+      .done(() => {
+        console.log(story);
+      })
+      .catch((err) => {
+        console.log("Error completing story:", err);
+      });
   })
 
 });
