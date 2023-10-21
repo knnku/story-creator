@@ -1,4 +1,6 @@
 $(document).ready(() => {
+  let userCookie = document.cookie.split("=");
+  let userWho = userCookie[1];
 
   const genStoryView = (story) => {
      let {
@@ -23,6 +25,7 @@ $(document).ready(() => {
       date_completed = "N/A"
      }
 
+
      const $storyView = `
       <article class="story-view container-sm" id="${id}">
 
@@ -37,12 +40,15 @@ $(document).ready(() => {
           <div>Story Status: ${story_status}</div>
           <div>Date Created: ${date_created}</div>
           <div>Date Completed: ${date_completed}</div>
-          <button type="button" class="btn btn-primary" id="complete-story">Complete Story</button>
+          <button type="button" class="btn btn-primary" id="complete-story" style="display: ${story_status === "admin" ? "none" : "inline"
+         }">Complete Story</button></div>
         </footer>
 
       </article>
         <hr>
-      <div class="new-contributions-container container-sm" style="display: ${story_status === "Complete" ? "none" : "inline"}">
+      <div class="new-contributions-container container-sm" style="display: ${
+        story_status === "Complete" ? "none" : "inline"
+      }">
         <form class="add-contribution">
           <label for="contribution-add" class="form-label">Contribute:</label>
           <textarea class="form-control contribution-input-text" rows="3"></textarea>
@@ -51,9 +57,11 @@ $(document).ready(() => {
           <button type="button" class="btn btn-primary" id="submit-contribution">Submit Contribution</button>
           <button type="button" class="btn btn-primary" id="cancel-contribution">Cancel</button>
         </div>
+        <hr>
+        <div class="contributions-list container"></div>
       </div>
       <hr>
-      <div class="contributions-list container"></div>
+
 
       `;
 
@@ -89,7 +97,7 @@ $(document).ready(() => {
       url: `/stories/${storyId}/complete`,
     })
       .done(() => {
-        console.log(story);
+        $(this).closest("#complete-story", "footer").fadeOut(1000);
       })
       .catch((err) => {
         console.log("Error completing story:", err);

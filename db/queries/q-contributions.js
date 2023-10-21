@@ -75,6 +75,7 @@ const getContributionById = (contribution_id) => {
     SELECT *
     FROM contributions
     WHERE id = $1
+    ORDER BY votes ASC
     `;
 
   const values = [contribution_id];

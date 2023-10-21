@@ -74,6 +74,8 @@ router.get('/stories/:id', (req, res) => {
     })
 });
 
+//KT Endpoint for completing storyes by storyId
+
 router.post('/stories/:id/complete', (req, res) => {
   const storyId = req.params.id;
 
