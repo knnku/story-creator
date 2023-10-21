@@ -43,7 +43,7 @@ $(document).ready(function () {
         // Render contribution to view.
         contribs.forEach((contribution) => {
           const $contributionElement = genContributionView(contribution);
-          console.log($contributionElement);
+          // console.log($contributionElement); test
           $(".contributions-list").prepend($contributionElement)
         });
       })

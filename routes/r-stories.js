@@ -74,4 +74,12 @@ router.get('/stories/:id', (req, res) => {
     })
 });
 
+router.post('/stories/:id/complete', (req, res) => {
+  const storyId = req.params.id;
+
+  console.log(storyId);
+
+  
+})
+
 module.exports = router;
