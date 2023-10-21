@@ -40,7 +40,7 @@ $(document).ready(() => {
           <div>Story Status: ${story_status}</div>
           <div>Date Created: ${date_created}</div>
           <div>Date Completed: ${date_completed}</div>
-          <button type="button" class="btn btn-primary" id="complete-story" style="display: ${story_status === "admin" ? "none" : "inline"
+          <button type="button" class="btn btn-primary" id="complete-story" style="display: ${story_status === "Complete" ? "none" : "inline"
          }">Complete Story</button></div>
         </footer>
 
