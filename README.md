@@ -1,5 +1,22 @@
 # Story Creator
 
+---
+
+A simple single page application built for submission to LHLs midterm projects. Using mainly jQuery/AJAX
+to interact with the front end elements and RESTful HTTP requests. With express in the middle to handle and request data from a 
+postgres database with the use of promises.
+
+Tech stack used:
+
+[![Tech Stack](https://skillicons.dev/icons?i=,html,css,js,jquery,express,)](https://skillicons.dev)
+
+Screenshots: 
+
+
+Built by @knnku & @linkwithlionhart
+
+---
+
 ## Things to note for _ALL_ team members:
 1. Dont fork this repo until we finish the project.
 2. When cloning the repo (w/o forking) I suggest creating a midterms directory and then running this script inside that directory\
