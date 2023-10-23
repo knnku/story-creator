@@ -1,19 +1,25 @@
-# Story Creator
-
+!["Big Screen Home Page"](https://raw.githubusercontent.com/knnku/story-creator/master/docs/sc-3.png)
 ---
 
 A simple single page application built for submission to LHLs midterm projects. Using mainly jQuery/AJAX
 to interact with the front end elements and RESTful HTTP requests. With express in the middle to handle and request data from a 
 postgres database with the use of promises.
 
-Tech stack used:
+**<p align="center">Tech stack:</p>**
 
-[![Tech Stack](https://skillicons.dev/icons?i=,html,css,js,jquery,express,)](https://skillicons.dev)
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=html,css,js,jquery,express,nodejs,figma" />
+  </a>
+</p>
 
 Screenshots: 
 
+!["Story Creator Home"](https://raw.githubusercontent.com/knnku/story-creator/master/docs/sc-2.png)
 
-Built by @knnku & @linkwithlionhart
+!["Story Creator View"](https://raw.githubusercontent.com/knnku/story-creator/master/docs/sc-1.png)
+
+_Built with love(or hate) by @knnku & @linkwithlionhart_
 
 ---
 
