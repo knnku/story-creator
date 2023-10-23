@@ -3,7 +3,9 @@ const {
   getContributionsById,
   addContribution,
   upvoteContribution,
-  approveContribution
+  approveContribution,
+  getContributionById,
+  deleteContribution
 } = require('../db/queries/q-contributions');
 
 const router = express.Router();
@@ -60,40 +62,59 @@ router.post('/add', (req, res) => {
     });
 });
 
-// // Endpoint to upvote a contribution.
-// router.post('/contributions/upvote', (req, res) => {
-//   const { contribution_id } = req.body;
+// Endpoint to reject the proposed contributions to an existing story.
+router.post('/reject', (req, res) => {
+  const { contribution_id } = req.body;
 
-//   upvoteContribution(contribution_id)
-//     .then(response => {
-//       res.json({
-//         success: true,
-//         message: 'Contribution upvoted!',
-//         contribution: response
-//       });
-//     })
-//     .catch(err => {
-//       console.error("Error upvoting contribution:", err);
-//       res.status(500).json({ success: false, message: "Internal server error." });
-//     });
-// });
+  deleteContribution(contribution_id)
+    .then(() => {
+      res.json({
+        success: true,
+        message: 'Contribution rejected!'
+      });
+    })
+    .catch(err => {
+      console.error("Error rejecting contribution:", err);
+      res.status(500).json({ success: false, message: "Internal server error." });
+    });
+});
 
-// // Endpoint to approve a contribution.
-// router.post('/contributions/approve', (req, res) => {
-//   const { contribution_id } = req.body;
 
-//   approveContribution(contribution_id)
-//     .then(response => {
-//       res.json({
-//         success: true,
-//         message: 'Contribution approved!',
-//         contribution: response
-//       });
-//     })
-//     .catch(err => {
-//       console.error("Error approving contribution:", err);
-//       res.status(500).json({ success: false, message: "Internal server error." });
-//     });
-// });
+// Endpoint to approve a contribution.
+router.post('/approve', (req, res) => {
+  const { contribution_id } = req.body;
+
+  approveContribution(contribution_id)
+    .then(response => {
+      console.log(response);
+      res.json({
+        success: true,
+        message: 'Contribution approved!',
+        contribution: response
+      });
+    })
+    .catch(err => {
+      console.error("Error approving contribution:", err);
+      res.status(500).json({ success: false, message: "Internal server error." });
+    });
+});
+
+// Endpoint to upvote a contribution.
+router.post('/upvote', (req, res) => {
+  const { contribution_id } = req.body;
+
+  upvoteContribution(contribution_id)
+    .then(response => {
+      res.json({
+        success: true,
+        message: 'Contribution upvoted!',
+        contribution: response
+      });
+    })
+    .catch(err => {
+      console.error("Error upvoting contribution:", err);
+      res.status(500).json({ success: false, message: "Internal server error." });
+    });
+});
 
 module.exports = router;

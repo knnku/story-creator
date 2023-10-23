@@ -67,9 +67,7 @@ $(document).ready(() => {
           // Clear the form fields.
           $("#new-story-text").val(''); //point to current html forms
           $("#new-story-title").val('');
-
-          alert("Your story has been posted successfully!");
-
+          // alert("Your story has been posted successfully!");
           // Add story to side column.
           const newStoryHTML = createStoryElement(response.story);
           const $newStory = $(newStoryHTML); // Convert the string to a jQuery object

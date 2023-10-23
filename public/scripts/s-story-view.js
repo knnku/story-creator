@@ -1,4 +1,6 @@
 $(document).ready(() => {
+  let userCookie = document.cookie.split("=");
+  let userWho = userCookie[1];
 
   const genStoryView = (story) => {
      let {
@@ -23,6 +25,7 @@ $(document).ready(() => {
       date_completed = "N/A"
      }
 
+
      const $storyView = `
       <article class="story-view container-sm" id="${id}">
 
@@ -30,27 +33,35 @@ $(document).ready(() => {
           <h4 class="story-title">"${title}"</h4>
           <i class="story-creator">Creator: user#${user_id}</i>
         </header>
-        <hr class="hr" />
+        <hr class="hr"/>
         <p class="story-paragraph">${main_story}</p>
 
         <footer class="story-view-footer">
-          <div>Complete: ${story_status}</div>
+          <div>Story Status: ${story_status}</div>
           <div>Date Created: ${date_created}</div>
           <div>Date Completed: ${date_completed}</div>
+          <button type="button" class="btn btn-primary" id="complete-story" style="display: ${story_status === "Complete" ? "none" : "inline"
+         }">Complete Story</button></div>
         </footer>
 
       </article>
         <hr>
-      <div class="new-contributions-container container-sm">
+      <div class="new-contributions-container container-sm" style="display: ${
+        story_status === "Complete" ? "none" : "inline"
+      }">
         <form class="add-contribution">
           <label for="contribution-add" class="form-label">Contribute:</label>
           <textarea class="form-control contribution-input-text" rows="3"></textarea>
         </form>
-        <button id="submit-contribution">Submit Contribution</button>
-        <button id="cancel-contribution">Cancel</button>
+        <div class="contribution-ctrls">
+          <button type="button" class="btn btn-primary" id="submit-contribution">Submit Contribution</button>
+          <button type="button" class="btn btn-primary" id="cancel-contribution">Cancel</button>
+        </div>
+        <hr>
+        <div class="contributions-list container"></div>
       </div>
       <hr>
-      <div class="contributions-list container"></div>
+
 
       `;
 
@@ -75,5 +86,22 @@ $(document).ready(() => {
         console.log("Error fetching story:", err);
       });
   });
+
+  //KT event listenery for completing/closing a story
+  $('#story-view-container').on("click", '#complete-story', function () {
+    var storyId = $(event.target).closest('article').attr('id')
+    console.log(storyId); //Test
+
+    $.ajax({
+      method: "POST",
+      url: `/stories/${storyId}/complete`,
+    })
+      .done(() => {
+        $(this).closest("#complete-story", "footer").fadeOut(1000);
+      })
+      .catch((err) => {
+        console.log("Error completing story:", err);
+      });
+  })
 
 });

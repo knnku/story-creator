@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const { getStories, insertStory, getStoryById } = require('../db/queries/q-stories');
+const { getStories, insertStory, getStoryById, completeStory } = require('../db/queries/q-stories');
 const router  = express.Router();
 
 // Endpoint to fetch stories from db.
@@ -73,5 +73,24 @@ router.get('/stories/:id', (req, res) => {
       res.status(500).json({ error: "Internal server error "});
     })
 });
+
+//KT Endpoint for completing storyes by storyId
+
+router.post('/stories/:id/complete', (req, res) => {
+  const storyId = req.params.id;
+
+  console.log(storyId); //test
+
+  completeStory(storyId)
+    .then((completedStory) => {
+      console.log("r-stories:", completedStory);
+      res.json(completedStory)
+    })
+    .catch(err => {
+      console.log("R-Stories: No response from DB");
+      res.status(500).json({ error: "Internal server error " });
+    })
+
+})
 
 module.exports = router;

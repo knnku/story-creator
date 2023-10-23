@@ -6,10 +6,10 @@ const getContributionsById = (storyData) => {
   const query = `
   SELECT *
   FROM contributions
-  WHERE story_id = $1
+  WHERE story_id = $1 AND proposal_status = false
   `;
 
-  values = [story_id];
+  const values = [story_id];
 
   return db.query(query, values)
     .then((data) => {
@@ -55,6 +55,79 @@ const addContribution = (contributionData) => {
     });
 };
 
+const deleteContribution = (contribution_id) => {
+  const query = `
+    DELETE FROM contributions
+    WHERE id = $1
+  `;
+
+  const values = [contribution_id];
+
+  return db.query(query, values)
+    .catch(err => {
+      console.error("Error deleting contribution:", err);
+      throw err;
+    });
+}
+
+const getContributionById = (contribution_id) => {
+  const query = `
+    SELECT *
+    FROM contributions
+    WHERE id = $1
+    ORDER BY votes ASC
+    `;
+
+  const values = [contribution_id];
+    return db.query(query, values)
+      .then(data => data.rows[0])
+      .catch(err => {
+        console.error("Error getting contribution by ID:", err);
+        throw err;
+    });
+  }
+
+
+const approveContribution = (contribution_id) => {
+  const query = `
+    UPDATE contributions
+    SET proposal_status = true
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  const values = [contribution_id];
+
+  return db.query(query, values)
+    .then(data => {
+      const approvedContribution = data.rows[0];
+      return appendContributionToStory(approvedContribution.story_proposal, approvedContribution.story_id)
+        .then(() => approvedContribution);  // After appending to story, return the approved contribution.
+    })
+    .catch(err => {
+      console.error("Error approving contribution:", err);
+      throw err;
+    });
+};
+
+const appendContributionToStory = (contributionText, storyId) => {
+  const query = `
+    UPDATE stories
+    SET main_story = main_story || '\n\n' || $1
+    WHERE id = $2
+    RETURNING *;
+  `;
+
+  const values = [contributionText, storyId];
+
+  return db.query(query, values)
+    .then(data => data.rows[0])
+    .catch(err => {
+      console.error("Error appending contribution to story:", err);
+      throw err;
+    });
+};
+
 const upvoteContribution = (contribution_id) => {
   const query = `
     UPDATE contributions
@@ -70,19 +143,12 @@ const upvoteContribution = (contribution_id) => {
     .catch(err => console.error("Error upvoting contribution:", err));
 };
 
-const approveContribution = (contribution_id) => {
-  const query = `
-    UPDATE contributions
-    SET proposal_status = true
-    WHERE id = $1
-    RETURNING *;
-  `;
-
-  const values = [contribution_id];
-
-  return db.query(query, values)
-    .then(data => data.rows[0])
-    .catch(err => console.error("Error approving contribution:", err));
+module.exports = {
+  getContributionsById,
+  addContribution,
+  deleteContribution,
+  approveContribution,
+  appendContributionToStory,
+  getContributionById,
+  upvoteContribution
 };
-
-module.exports = { getContributionsById, addContribution, upvoteContribution, approveContribution };

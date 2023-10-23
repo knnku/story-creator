@@ -21,4 +21,11 @@ VALUES
     'Khajit has warez if dragonborn haz coinzzz.',
     Now(), -- can also be set as default within the schema create
     false -- false: meaning not accepted by default? true: when accepted to story
+  ),
+  (
+    2,
+    0,
+    'I used to be a solider until I took an arrow to the knee.',
+    Now(),
+    false
   );

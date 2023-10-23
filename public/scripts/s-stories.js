@@ -20,7 +20,7 @@ const createStoryElement = story => {
       <p>${main_story}</p>
 
       <footer>
-      <div>Open: ${story_status}</div>
+      <div>Completed: ${story_status}</div>
       <div>Date Created: ${date_created}</div>
       <div>Date Completed: ${date_completed}</div>
       </footer>
